@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".HomePageActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/slideViewPage"
+            android:layout_width="match_parent"
+            android:layout_height="199dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="1dp"
+            >
+
+        </androidx.viewpager.widget.ViewPager>
+
+        <LinearLayout
+            android:id="@+id/dotsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="129dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:onClick="clickTruyenTranh"
+                android:id="@+id/rltTruyenTranh"
+                android:layout_width="205dp"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="112dp"
+                    android:layout_height="81dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="47dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="47dp"
+                    android:background="@drawable/bg_homeview"
+                    app:srcCompat="@drawable/truyentranh" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="75dp"
+                    android:layout_marginTop="102dp"
+                    android:layout_marginBottom="9dp"
+                    android:text="Truyện tranh"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:onClick="clickTruyenChu"
+                android:id="@+id/rltTruyenChu"
+                android:layout_width="205dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="102dp"
+                    android:layout_marginEnd="67dp"
+                    android:layout_marginBottom="9dp"
+                    android:text="Truyện chữ"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="112dp"
+                    android:layout_height="81dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="47dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="47dp"
+                    android:background="@drawable/bg_homeview"
+                    app:srcCompat="@drawable/truyenchu" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="129dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/rltFavorite"
+                android:layout_width="205dp"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imgFavorite"
+                    android:layout_width="112dp"
+                    android:layout_height="81dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="47dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="47dp"
+                    android:background="@drawable/bg_homeview"
+                    app:srcCompat="@drawable/favorite" />
+
+                <TextView
+                    android:id="@+id/txtFavorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="75dp"
+                    android:layout_marginTop="102dp"
+                    android:layout_marginBottom="9dp"
+                    android:text="Favorite"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rltConnect"
+                android:layout_width="205dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txtConnect"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="102dp"
+                    android:layout_marginEnd="67dp"
+                    android:layout_marginBottom="9dp"
+                    android:text="Connect"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="112dp"
+                    android:layout_height="81dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="47dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="47dp"
+                    android:background="@drawable/bg_homeview"
+                    app:srcCompat="@drawable/connect" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="129dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/rltContact"
+                android:layout_width="205dp"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/imgContact"
+                    android:layout_width="112dp"
+                    android:layout_height="81dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="47dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="47dp"
+                    android:background="@drawable/bg_homeview"
+                    app:srcCompat="@drawable/contact" />
+
+                <TextView
+                    android:id="@+id/txtContact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="75dp"
+                    android:layout_marginTop="102dp"
+                    android:layout_marginBottom="9dp"
+                    android:text="Contact"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rltReport"
+                android:layout_width="205dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/txtReport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="102dp"
+                    android:layout_marginEnd="67dp"
+                    android:layout_marginBottom="9dp"
+                    android:text="Report"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="112dp"
+                    android:layout_height="81dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="47dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="47dp"
+                    android:background="@drawable/bg_homeview"
+                    app:srcCompat="@drawable/report" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

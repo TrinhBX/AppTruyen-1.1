@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="10dp">
+
+    <GridView
+        android:id="@+id/listHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:horizontalSpacing="20dp"
+        android:numColumns="3"
+        android:scrollbars="none"
+        android:verticalSpacing="15dp"/>
+</RelativeLayout>

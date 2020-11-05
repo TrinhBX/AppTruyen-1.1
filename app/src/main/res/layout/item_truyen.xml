@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="4dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
+        <ImageView
+            android:id="@+id/imgAnhTruyen"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/zoro"
+            />
+        <TextView
+            android:id="@+id/txvTenChap"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="#A6040404"
+            android:layout_alignParentBottom="true"
+            android:textColor="#fff"
+            android:text="truyen tranh"
+            android:gravity="center"
+            android:textSize="10dp"/>
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/txvTentruyen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:gravity="center"
+        android:text="ten truyen tranh"
+        android:textSize="14dp"
+        android:textColor="#000"
+        />
+
+</LinearLayout>

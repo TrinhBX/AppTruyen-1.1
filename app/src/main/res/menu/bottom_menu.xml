@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/libraryBottomBar"
+        android:enabled="true"
+        android:icon="@drawable/home_24"
+        android:title="@string/thu_vien"/>
+    <item
+        android:id="@+id/categoriesBottomBar"
+        android:enabled="true"
+        android:icon="@drawable/categorize_48"
+        android:title="@string/categories"/>
+    <item
+        android:id="@+id/bookcaseBottomBar"
+        android:enabled="true"
+        android:icon="@drawable/icon_search_24px"
+        android:title="Tủ sách"/>
+    <item
+        android:id="@+id/searchBottomBar"
+        android:enabled="true"
+        android:icon="@drawable/icon_search_24px"
+        android:title="@string/tim_kiem"/>
+</menu>

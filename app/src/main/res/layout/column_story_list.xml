@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/bg_book"
+    android:paddingVertical="10dp"
+    android:paddingHorizontal="8dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <ImageView
+            android:id="@+id/imgColAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/todo"
+            android:scaleType="fitXY"
+            android:src="@drawable/image_broken" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/img_status"
+            android:paddingVertical="3dp"
+            android:paddingHorizontal="5dp"
+            android:text="Full"
+            android:textColor="@color/colorWhile"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C.100"
+            android:paddingVertical="3dp"
+            android:paddingHorizontal="5dp"
+            android:textColor="@color/colorWhile"
+            android:background="#FF9800"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:textSize="12sp"
+        android:gravity="center"
+        android:id="@+id/txtColStoryName"
+        android:textColor="#000000" />
+</LinearLayout>

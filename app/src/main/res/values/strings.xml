@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">AppTruyen</string>
+    <string name="story_name">Story Name</string>
+    <string name="chapter">Số chương:</string>
+    <string name="author">Author:</string>
+    <string name="status">Status:</string>
+    <string name="type">Type:</string>
+    <string name="todo">TODO</string>
+    <string name="see_more"><![CDATA[Xem thêm >>]]></string>
+    <string name="type_tien_hiep">Tiên Hiệp</string>
+    <string name="type_huyen_huyen">Huyền Huyễn</string>
+    <string name="canh_ky">Cạnh Kỹ</string>
+    <string name="type_do_thi">Đô Thị</string>
+    <string name="type_khoa_huyen">Khoa Huyễn</string>
+    <string name="type_ky_huyen">Kỳ Huyễn</string>
+    <string name="type_vo_hiep">Võ Hiệp</string>
+    <string name="type_lich_su">Lịch Sử</string>
+    <string name="type_dong_nhan">Đồng Nhân</string>
+    <string name="type_quan_su">Quân Sự</string>
+    <string name="type_du_hi">Du Hí</string>
+    <string name="type_linh_di">Linh Dị</string>
+    <string name="type_ngon_tinh">Ngôn tình</string>
+    <string name="search">Search</string>
+    <string name="tim_kiem">Tìm Kiếm</string>
+    <string name="thu_vien">Thư viện</string>
+    <string name="chapter_list">Danh sách chương</string>
+    <string name="categories">Thể loại</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

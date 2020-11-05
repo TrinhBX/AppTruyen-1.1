@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".truyentranh.Main2Activity">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#363F44"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:onClick="update"
+            android:padding="15dp"
+            android:src="@drawable/update"
+            android:tint="#fff" />
+
+        <EditText
+            android:id="@+id/edtTimKiem"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/bg_edt"
+            android:gravity="center"
+            android:hint="Nhập tên truyện cần tìm"
+            android:textColor="#fff"
+            android:textColorHint="#B3ADAD"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="177dp">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/slideViewPage"
+            android:layout_width="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="1dp"
+            android:layout_height="177dp">
+
+        </androidx.viewpager.widget.ViewPager>
+        <LinearLayout
+            android:id="@+id/dotsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/gdvDSTruyen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="3">
+
+    </GridView>
+
+</LinearLayout>
