@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "934628325900",
+    "firebase_url": "https://app-reading-stories.firebaseio.com",
+    "project_id": "app-reading-stories",
+    "storage_bucket": "app-reading-stories.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934628325900:android:bb08a628df0282c5ae0c29",
+        "android_client_info": {
+          "package_name": "com.trinhbx.AppReadingStories"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "934628325900-fe4rggv7nio7kbb2939ipmu7fg2ddpjs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfgqW67HkrkoJvH0RLPH80xSt3hC9lBRc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "934628325900-fe4rggv7nio7kbb2939ipmu7fg2ddpjs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

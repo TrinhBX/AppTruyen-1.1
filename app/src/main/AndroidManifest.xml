@@ -16,10 +16,7 @@
         android:usesCleartextTraffic="true"
         android:screenOrientation="portrait" >
         <activity android:name=".StartActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".truyenchu.activity.CategoriesActivity"
@@ -31,6 +28,10 @@
         <activity
             android:name=".truyenchu.activity.MainActivity"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

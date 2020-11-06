@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingVertical="15dp"
     android:paddingHorizontal="7dp"
-    android:layout_margin="15dp"
     android:background="@drawable/bg_book"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <ImageView
@@ -54,7 +53,8 @@
         android:textColor="@color/grayText"
         android:layout_marginHorizontal="15dp"
         android:layout_below="@id/txtStatus"
-        android:layout_toEndOf="@id/imgAvatar"/>
+        android:layout_toEndOf="@id/imgAvatar"
+        tools:ignore="SmallSp" />
     <TextView
         android:id="@+id/txtTotalChapter"
         android:layout_width="match_parent"

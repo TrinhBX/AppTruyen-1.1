@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.apptruyen.R;
 import com.example.apptruyen.truyenchu.fragment.ListHorizontalFragment;
@@ -29,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private boolean isRemove = false;
     private SearchStoryFragment searchStoryFragment;
     ListVerticalFragment listVerticalFragment;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         listVerticalFragment = new ListVerticalFragment("","");
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.listStory,listVerticalFragment);
         fragmentTransaction.commit();
-        setChangeView();
+        //setChangeView();
     }
 
     private void mapping(){

@@ -18,7 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
         <LinearLayout
             android:id="@+id/navLayout"
             android:layout_width="match_parent"
@@ -63,8 +62,7 @@
                 <TextView
                     android:id="@+id/txtAllStory"
                     style="@style/storyListLabel"
-                    android:text="TẤT CẢ TRUYỆN"
-                    />
+                    android:text="TẤT CẢ TRUYỆN" />
 
                 <ImageButton
                     android:id="@+id/btnChangeView"
@@ -81,7 +79,7 @@
                 android:id="@+id/listStory"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="?attr/actionBarSize"
+                android:layout_marginBottom="50dp"
                 android:layout_below="@+id/allStoryHeader"/>
         </RelativeLayout>
 
@@ -94,19 +92,18 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_scrollFlags="noScroll|enterAlways|snap"
+        app:layout_scrollFlags="noScroll|enterAlways"
         app:title="Thư viện" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="50dp"
         android:layout_gravity="bottom"
         android:background="@color/colorPrimaryBackground"
         app:menu="@menu/bottom_menu"
         app:itemTextColor="@color/black"
         app:itemIconTint="@color/black"/>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

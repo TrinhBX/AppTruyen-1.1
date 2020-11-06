@@ -57,18 +57,18 @@ public class StoryDetailActivity extends AppCompatActivity {
 
         mapping();
         setSupportActionBar(toolbar);
-        collapsingToolbarLayout.setTitle(story.getStoryName()); //set name story
-        txtStoryName.setText(story.getStoryName()
-        );
-        txtAuthor.setText("Tác giả: "+story.getAuthor());
-        txtStatus.setText("Tình Trạng: "+story.getStatus());
-        txtType.setText("Thể loại: "+story.getType());
-        txtReviewContent.setText(story.getReview());
-        txtChapterTotal.setText("Số chương: 0");
-        //avatar.setImageResource(R.drawable.image_broken);
-        VolleySingleton.getInstance(StoryDetailActivity.this).setImage(story.getAvatar(),avatar);
 
         if(story!=null){
+            collapsingToolbarLayout.setTitle(story.getStoryName()); //set name story
+            txtStoryName.setText(story.getStoryName());
+            txtAuthor.setText("Tác giả: "+story.getAuthor());
+            txtStatus.setText("Tình Trạng: "+story.getStatus());
+            txtType.setText("Thể loại: "+story.getType());
+            txtReviewContent.setText(story.getReview());
+            txtChapterTotal.setText("Số chương:"+story.getNumberOfChapter());
+            //avatar.setImageResource(R.drawable.image_broken);
+            VolleySingleton.getInstance(StoryDetailActivity.this).setImage(story.getAvatar(),avatar);
+
             getChapterList(story.getIdStory());
             List<Story> listStoryOfAuthor = new ArrayList<>();
             columnStoryListAdapter = new ColumnStoryListAdapter(this,R.layout.column_story_list, listStoryOfAuthor,listStoryOfAuthor.size());

@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListHorizontalFragment extends Fragment {
-    private ColumnStoryListAdapter columnStoryListAdapter;
-    private GridView listHorizontal;
+    //private ColumnStoryListAdapter columnStoryListAdapter;
+    //private GridView listHorizontal;
     private List<Story> storyList;
     private String type;
     private String column;
@@ -35,11 +35,11 @@ public class ListHorizontalFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_horizontal, container, false);
         storyList = new ArrayList<>();
-        listHorizontal = (GridView)view.findViewById(R.id.listHorizontal);
+        //listHorizontal = (GridView)view.findViewById(R.id.listHorizontal);
 
-        columnStoryListAdapter = new ColumnStoryListAdapter(getActivity(),R.layout.column_story_list,storyList,storyList.size());
-        listHorizontal.setAdapter(columnStoryListAdapter);
-        VolleySingleton.getInstance(getActivity()).getStoryList(column,type,storyList,columnStoryListAdapter);
+        //columnStoryListAdapter = new ColumnStoryListAdapter(getActivity(),R.layout.column_story_list,storyList,storyList.size());
+        //listHorizontal.setAdapter(columnStoryListAdapter);
+        //VolleySingleton.getInstance(getActivity()).getStoryList(column,type,storyList,columnStoryListAdapter);
         return view;
     }
 }

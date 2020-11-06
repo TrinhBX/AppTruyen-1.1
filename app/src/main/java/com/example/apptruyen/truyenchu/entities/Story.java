@@ -9,6 +9,19 @@ public class Story implements Serializable {
     private String status;
     private String type;
     private String avatar;
+
+    public Story(int idStory, String storyName, String author, String status, String type, String avatar, int numberOfChapter, String review) {
+        this.idStory = idStory;
+        this.storyName = storyName;
+        this.author = author;
+        this.status = status;
+        this.type = type;
+        this.avatar = avatar;
+        this.numberOfChapter = numberOfChapter;
+        this.review = review;
+    }
+
+    private int numberOfChapter;
     private String review;
 
 
@@ -93,5 +106,12 @@ public class Story implements Serializable {
 
     public void setReview(String review) {
         this.review = review;
+    }
+    public int getNumberOfChapter() {
+        return numberOfChapter;
+    }
+
+    public void setNumberOfChapter(int numberOfChapter) {
+        this.numberOfChapter = numberOfChapter;
     }
 }

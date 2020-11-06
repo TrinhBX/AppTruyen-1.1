@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,8 +20,10 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.apptruyen.R;
+import com.example.apptruyen.StartActivity;
 import com.example.apptruyen.truyenchu.adapter.ChapterListAdapter;
 import com.example.apptruyen.truyenchu.adapter.ColumnStoryListAdapter;
+import com.example.apptruyen.truyenchu.adapter.RecycleAdapter;
 import com.example.apptruyen.truyenchu.adapter.RowStoryListAdapter;
 import com.example.apptruyen.truyenchu.entities.Chapter;
 import com.example.apptruyen.truyenchu.entities.Story;
@@ -81,8 +84,7 @@ public class VolleySingleton {
         getRequestQueue().add(imageRequest);
     }
 
-    public List<Story> getList(Activity activity){
-        final List<Story> list = new ArrayList<>();
+    public void getList(final RecycleAdapter adapter, final List<Story> list){
         StringRequest rq = new StringRequest(Request.Method.POST, GET_STORY_LIST_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -97,9 +99,11 @@ public class VolleySingleton {
                         String type = jsonObject.getString("Type");
                         String avatar = jsonObject.getString("Avatar");
                         String review = jsonObject.getString("Review");
-                        list.add(new Story(id,name,author,status,type,avatar,review));
+                        int numberOfChapters = jsonObject.getInt("NumberOfChapters");
+                        list.add(new Story(id,name,author,status,type,avatar,numberOfChapters,review));
                     }
                     Log.e("REPO",""+list.size());
+                    adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -113,14 +117,13 @@ public class VolleySingleton {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                    params.put("type", "tien hiep");
-                    params.put("column", "type");
+                    params.put("type", "");
+                    params.put("column", "");
                 return params;
             }
         };
         getRequestQueue().add(rq);
         Log.e("Volley",""+list.size());
-        return list;
     }
     public void getStoryList(final String column, final String type, final List<Story> storyList, final RowStoryListAdapter rowStoryListAdapter, final int count){
         StringRequest rqListStoryByType = new StringRequest(Request.Method.POST, GET_STORY_LIST_URL, new Response.Listener<String>() {

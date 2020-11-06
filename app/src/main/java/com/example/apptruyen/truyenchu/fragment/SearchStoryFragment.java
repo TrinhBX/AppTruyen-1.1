@@ -70,7 +70,7 @@ public class SearchStoryFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(edtSearch.getText().toString().trim().length()>2){
+                if(edtSearch.getText().toString().trim().length()>0){
                     List<Story> storyList = new ArrayList<>();
                     rowStoryListAdapter = new RowStoryListAdapter(getActivity(), R.layout.row_story_list, storyList, storyList.size());
                     listView.setAdapter(rowStoryListAdapter);
