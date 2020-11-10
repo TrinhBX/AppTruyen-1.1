@@ -1,41 +1,60 @@
 package com.example.apptruyen;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.MenuItem;
 
-import com.example.apptruyen.truyenchu.activity.MainActivity;
-import com.example.apptruyen.truyenchu.activity.VolleySingleton;
-import com.example.apptruyen.truyenchu.adapter.RecycleAdapter;
-import com.example.apptruyen.truyenchu.entities.Story;
-import com.example.apptruyen.truyenchu.utils.Validator;
+import com.example.apptruyen.entities.Story;
+import com.example.apptruyen.fragment.BookCaseFragment;
+import com.example.apptruyen.fragment.LibraryFragment;
+import com.example.apptruyen.fragment.SearchStoryFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class StartActivity extends AppCompatActivity {
     private List<Story> list;
+    private Toolbar toolbar;
+    MenuItem menuItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        if(!Validator.checkInternetConnection(this)){
-            Toast.makeText(this,"No internet",Toast.LENGTH_SHORT).show();
-        } else {
-            RecyclerView recyclerView = (RecyclerView)findViewById(R.id.reviewLayout);
-            list = new ArrayList<>();
-            RecycleAdapter recycleAdapter = new RecycleAdapter(this,list,R.layout.row_story_list);
-            //VolleySingleton.getInstance(this).getList(this, MainActivity.class);
-            recyclerView.setAdapter(recycleAdapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            VolleySingleton.getInstance(this).getList(recycleAdapter,list);
-        }
+        toolbar = (Toolbar)findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        //set bottom bar
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        loadFragment(new LibraryFragment(),"");
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment;
+                switch (item.getItemId()) {
+                    case R.id.library_bottom_bar:
+                        loadFragment(new LibraryFragment(),"");
+                        toolbar.setTitle("Thư viện");
+                        return true;
+                    case R.id.bookcase_bottom_bar:
+                        loadFragment(new BookCaseFragment(),"");
+                        toolbar.setTitle("Tủ sách");
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+    private void loadFragment(Fragment fragment, String tag) {
+        // load Fragment
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment,tag);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     @Override

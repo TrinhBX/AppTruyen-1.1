@@ -16,22 +16,22 @@
         android:usesCleartextTraffic="true"
         android:screenOrientation="portrait" >
         <activity android:name=".StartActivity">
-
-        </activity>
-        <activity
-            android:name=".truyenchu.activity.CategoriesActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".truyenchu.activity.ChapterContentActivity" />
-        <activity
-            android:name=".truyenchu.activity.StoryDetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".truyenchu.activity.MainActivity"
-            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.CategoriesActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.ChapterContentActivity" />
+        <activity
+            android:name=".activity.StoryDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:screenOrientation="portrait">
+
         </activity>
     </application>
 
