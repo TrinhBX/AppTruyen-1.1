@@ -23,6 +23,7 @@ import com.example.apptruyen.R;
 import com.example.apptruyen.adapter.ColumnStoryListAdapter;
 import com.example.apptruyen.fragment.ChapterListFragment;
 import com.example.apptruyen.entities.Story;
+import com.example.apptruyen.utils.VolleySingleton;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import org.json.JSONArray;

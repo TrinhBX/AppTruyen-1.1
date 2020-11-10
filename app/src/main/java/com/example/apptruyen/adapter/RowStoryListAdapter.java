@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.example.apptruyen.R;
 import com.example.apptruyen.entities.Story;
 import com.example.apptruyen.activity.StoryDetailActivity;
-import com.example.apptruyen.activity.VolleySingleton;
+import com.example.apptruyen.utils.VolleySingleton;
 
 import java.util.List;
 

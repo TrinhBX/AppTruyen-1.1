@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.apptruyen.R;
-import com.example.apptruyen.activity.VolleySingleton;
+import com.example.apptruyen.utils.VolleySingleton;
 import com.example.apptruyen.adapter.ChapterListAdapter;
 import com.example.apptruyen.entities.Chapter;
 

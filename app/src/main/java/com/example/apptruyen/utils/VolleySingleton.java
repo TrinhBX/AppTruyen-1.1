@@ -1,4 +1,4 @@
-package com.example.apptruyen.activity;
+package com.example.apptruyen.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;

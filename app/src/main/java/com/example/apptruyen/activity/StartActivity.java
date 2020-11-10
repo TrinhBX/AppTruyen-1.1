@@ -1,4 +1,4 @@
-package com.example.apptruyen;
+package com.example.apptruyen.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.example.apptruyen.R;
 import com.example.apptruyen.entities.Story;
 import com.example.apptruyen.fragment.BookCaseFragment;
 import com.example.apptruyen.fragment.LibraryFragment;

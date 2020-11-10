@@ -20,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.apptruyen.R;
 import com.example.apptruyen.fragment.ChapterListFragment;
 import com.example.apptruyen.entities.Chapter;
+import com.example.apptruyen.utils.VolleySingleton;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.apptruyen.R;
 import com.example.apptruyen.activity.StoryDetailActivity;
-import com.example.apptruyen.activity.VolleySingleton;
+import com.example.apptruyen.utils.VolleySingleton;
 import com.example.apptruyen.entities.Story;
 
 import java.util.List;

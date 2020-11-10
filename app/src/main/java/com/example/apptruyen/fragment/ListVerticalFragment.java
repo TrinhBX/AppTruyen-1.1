@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.apptruyen.R;
 import com.example.apptruyen.adapter.RecycleAdapter;
 import com.example.apptruyen.entities.Story;
-import com.example.apptruyen.activity.VolleySingleton;
+import com.example.apptruyen.utils.VolleySingleton;
 
 import java.util.ArrayList;
 import java.util.List;
