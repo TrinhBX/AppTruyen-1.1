@@ -48,7 +48,7 @@ public class CategoryFragment extends Fragment {
         //set default
         storyList = new ArrayList<>();
         recyclerView = (RecyclerView)view.findViewById(R.id.category_list);
-        recycleAdapter = new RecycleAdapter(getContext(),storyList,R.layout.row_story_list);
+        recycleAdapter = new RecycleAdapter(getContext(),storyList,R.layout.row_story_list,"ROW");
         recyclerView.setAdapter(recycleAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         getStoryList("Tien hiep");

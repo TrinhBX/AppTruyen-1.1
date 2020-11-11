@@ -8,9 +8,8 @@ public class Chapter implements Serializable {
     private String chapterName;
     private String uploader;
     private String content;
-    public Chapter(int idChapter, int idStory, String chapterName) {
+    public Chapter(int idChapter, String chapterName) {
         this.idChapter = idChapter;
-        this.idStory = idStory;
         this.chapterName = chapterName;
     }
 

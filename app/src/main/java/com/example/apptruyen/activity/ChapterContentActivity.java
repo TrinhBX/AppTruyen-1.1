@@ -65,7 +65,7 @@ public class ChapterContentActivity extends AppCompatActivity {
         txtBackHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ChapterContentActivity.this, MainActivity.class));
+                startActivity(new Intent(ChapterContentActivity.this, StartActivity.class));
             }
         });
 

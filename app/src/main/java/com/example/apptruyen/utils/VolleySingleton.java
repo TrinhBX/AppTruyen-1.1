@@ -328,7 +328,7 @@ public class VolleySingleton {
                         int idChapter = chapter.getInt("IDChapter");
                         int idStory = chapter.getInt("IDStory");
                         String chapterName = chapter.getString("ChapterName");
-                        chapterList.add(new Chapter(idChapter,idStory,chapterName));
+                        //chapterList.add(new Chapter(idChapter,idStory,chapterName));
                     }
                     chapterListAdapter.setCount(chapterList.size());
                     chapterListAdapter.notifyDataSetChanged();
@@ -364,7 +364,7 @@ public class VolleySingleton {
                             int idChapter = chapter.getInt("IDChapter");
                             int idStory = chapter.getInt("IDStory");
                             String chapterName = chapter.getString("ChapterName");
-                            chapterList.add(new Chapter(idChapter,idStory,chapterName));
+                            //chapterList.add(new Chapter(idChapter,idStory,chapterName));
                         }
                     }
                     chapterListAdapter.setCount(chapterList.size());

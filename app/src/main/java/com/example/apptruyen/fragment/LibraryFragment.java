@@ -108,7 +108,7 @@ public class LibraryFragment extends Fragment {
                         int numberOfChapters = jsonObject.getInt("NumberOfChapters");
                         stories.add(new Story(id,name,author,status,type,avatar,numberOfChapters,review));
                     }
-                    RecycleAdapter adapter = new RecycleAdapter(getContext(),stories,R.layout.row_story_list);
+                    RecycleAdapter adapter = new RecycleAdapter(getContext(),stories,R.layout.row_story_list,"ROW");
                     recyclerView.setAdapter(adapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 } catch (JSONException e) {
