@@ -19,7 +19,9 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/todo"
             android:scaleType="fitXY"
-            android:src="@drawable/image_broken" />
+            android:src="@drawable/image_broken"
+            tools:layout_editor_absoluteX="5dp"
+            tools:layout_editor_absoluteY="0dp" />
 
         <TextView
             android:layout_width="wrap_content"

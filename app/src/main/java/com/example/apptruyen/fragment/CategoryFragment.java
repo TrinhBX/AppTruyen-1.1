@@ -37,7 +37,7 @@ public class CategoryFragment extends Fragment {
     private TabLayout categoryTabs;
     private RecyclerView recyclerView;
     RecycleAdapter recycleAdapter;
-    private List<Story> storyList;
+    private List<Object> storyList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,7 +48,7 @@ public class CategoryFragment extends Fragment {
         //set default
         storyList = new ArrayList<>();
         recyclerView = (RecyclerView)view.findViewById(R.id.category_list);
-        recycleAdapter = new RecycleAdapter(getContext(),storyList,R.layout.row_story_list,"ROW");
+        recycleAdapter = new RecycleAdapter(getContext(),storyList,R.layout.row_story_list,"ROW_FULL");
         recyclerView.setAdapter(recycleAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         getStoryList("Tien hiep");

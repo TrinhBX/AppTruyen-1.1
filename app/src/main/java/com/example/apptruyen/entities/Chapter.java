@@ -12,6 +12,11 @@ public class Chapter implements Serializable {
         this.idChapter = idChapter;
         this.chapterName = chapterName;
     }
+    public Chapter(int idStory,int idChapter, String chapterName) {
+        this.idStory = idStory;
+        this.idChapter = idChapter;
+        this.chapterName = chapterName;
+    }
 
     public Chapter(int idChapter, int idStory, String chapterName, String uploader, String content) {
         this.idChapter = idChapter;

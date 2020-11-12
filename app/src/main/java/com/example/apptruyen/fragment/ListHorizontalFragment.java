@@ -34,7 +34,7 @@ public class ListHorizontalFragment extends Fragment {
         storyList = new ArrayList<>();
         //listHorizontal = (GridView)view.findViewById(R.id.listHorizontal);
 
-        //columnStoryListAdapter = new ColumnStoryListAdapter(getActivity(),R.layout.column_story_list,storyList,storyList.size());
+        //columnStoryListAdapter = new ColumnStoryListAdapter(getActivity(),R.layout.card_item,storyList,storyList.size());
         //listHorizontal.setAdapter(columnStoryListAdapter);
         //VolleySingleton.getInstance(getActivity()).getStoryList(column,type,storyList,columnStoryListAdapter);
         return view;

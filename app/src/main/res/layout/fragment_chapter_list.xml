@@ -30,7 +30,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/close_24"
-                android:background="#00EAEAEA"/>
+                android:background="#00EAEAEA"
+                android:contentDescription="TODO" />
         </LinearLayout>
 
         <LinearLayout
@@ -48,8 +49,8 @@
         </LinearLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ListView
-        android:id="@+id/lvChapterList"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_chapter_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"

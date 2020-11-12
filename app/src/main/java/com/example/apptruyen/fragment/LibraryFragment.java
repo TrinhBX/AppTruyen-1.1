@@ -93,7 +93,7 @@ public class LibraryFragment extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLManager.GET_STORY_LIST_URL.getUrl(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                List<Story> stories = new ArrayList<>();
+                List<Object> stories = new ArrayList<>();
                 try {
                     JSONArray jsonArray = new JSONArray(response);
                     for(int i = 0; i<jsonArray.length();i++){
@@ -108,7 +108,7 @@ public class LibraryFragment extends Fragment {
                         int numberOfChapters = jsonObject.getInt("NumberOfChapters");
                         stories.add(new Story(id,name,author,status,type,avatar,numberOfChapters,review));
                     }
-                    RecycleAdapter adapter = new RecycleAdapter(getContext(),stories,R.layout.row_story_list,"ROW");
+                    RecycleAdapter adapter = new RecycleAdapter(getContext(),stories,R.layout.row_story_list,"ROW_FULL");
                     recyclerView.setAdapter(adapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 } catch (JSONException e) {

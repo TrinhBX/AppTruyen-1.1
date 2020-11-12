@@ -8,7 +8,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,10 +44,10 @@ public class StoryDetailActivity extends AppCompatActivity {
     private LinearLayout chapterListLayout;
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbarLayout;
-    private GridView gvListStoryOfAuthor;
-    private ColumnStoryListAdapter columnStoryListAdapter;
-    private NestedScrollView scrollView;
     private static final String URL = "https://mis58pm.000webhostapp.com/GetChapterList.php";
+    private static final String TAG = "FRAGMENT_CHAPTER_LIST";
+    private ImageButton btnBookmark;
+    private boolean isBookmark = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +62,7 @@ public class StoryDetailActivity extends AppCompatActivity {
 
         if(story!=null){
             collapsingToolbarLayout.setTitle(story.getStoryName()); //set name story
-            txtStoryName.setText(story.getStoryName());
+            //txtStoryName.setText(story.getStoryName());
             txtAuthor.setText("Tác giả: "+story.getAuthor());
             txtStatus.setText("Tình Trạng: "+story.getStatus());
             txtType.setText("Thể loại: "+story.getType());
@@ -69,22 +71,37 @@ public class StoryDetailActivity extends AppCompatActivity {
             //avatar.setImageResource(R.drawable.image_broken);
             VolleySingleton.getInstance(StoryDetailActivity.this).setImage(story.getAvatar(),avatar);
 
-            getChapterList(story.getIdStory());
-            List<Story> listStoryOfAuthor = new ArrayList<>();
-            columnStoryListAdapter = new ColumnStoryListAdapter(this,R.layout.column_story_list, listStoryOfAuthor,listStoryOfAuthor.size());
-            gvListStoryOfAuthor.setAdapter(columnStoryListAdapter);
-            VolleySingleton.getInstance(this).getStoryList("author",story.getAuthor(),listStoryOfAuthor,columnStoryListAdapter);
         }
 
         chapterListLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ChapterListFragment chapterListFragment = new ChapterListFragment();
+
                 Bundle sendBundle = new Bundle();
-                chapterListFragment.setArguments(sendBundle);
                 sendBundle.putInt("idStory",story.getIdStory());
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.listChapter,chapterListFragment);
+
+                ChapterListFragment chapterListFragment = new ChapterListFragment();
+                chapterListFragment.setArguments(sendBundle);
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.listChapter,chapterListFragment,TAG);
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+            }
+        });
+
+        btnBookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String s = "";
+                if(!isBookmark){
+                    s= "Bookmarking";
+                    btnBookmark.setImageResource(R.drawable.on_bookmark_24);
+                    isBookmark = true;
+                } else {
+                    s= "Un-Bookmarking";
+                    btnBookmark.setImageResource(R.drawable.bookmark_24);
+                    isBookmark = false;
+                }
+                Toast.makeText(StoryDetailActivity.this,s,Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -101,43 +118,11 @@ public class StoryDetailActivity extends AppCompatActivity {
         chapterListLayout =(LinearLayout)findViewById(R.id.chapterListLayout);
         avatar = (ImageView)findViewById(R.id.imgAvatar);
         toolbar = (Toolbar) findViewById(R.id.storyDetailToolbar);
-        gvListStoryOfAuthor = (GridView)findViewById(R.id.gvStoryOfAuthor);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapse);
-        scrollView = (NestedScrollView)findViewById(R.id.scrollView);
-        scrollView.scrollTo(0,0);
+        btnBookmark = (ImageButton) findViewById(R.id.btn_bookmark);
     }
 
-    private void getChapterList(final int idStory){
-        StringRequest getChapter = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray chapterList = new JSONArray(response);
-                    JSONObject latestChapter = chapterList.getJSONObject(chapterList.length()-1);
-                    txtLatestChapter.setText(latestChapter.getString("ChapterName"));
-                    txtChapterTotal.setText("Số chương: "+chapterList.length());
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(StoryDetailActivity.this, "Error", Toast.LENGTH_LONG).show();
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("idStory",""+idStory);
-                return params;
-            }
-        };
-
-        VolleySingleton.getInstance(this).getRequestQueue().add(getChapter);
-    }
 
     @Override
     protected void onPause() {

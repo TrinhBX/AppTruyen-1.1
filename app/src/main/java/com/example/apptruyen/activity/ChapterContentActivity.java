@@ -20,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.apptruyen.R;
 import com.example.apptruyen.fragment.ChapterListFragment;
 import com.example.apptruyen.entities.Chapter;
+import com.example.apptruyen.utils.URLManager;
 import com.example.apptruyen.utils.VolleySingleton;
 
 import org.json.JSONArray;
@@ -60,30 +61,30 @@ public class ChapterContentActivity extends AppCompatActivity {
         txtChapterList = (TextView)findViewById(R.id.txtChapterList);
         scrollView =(ScrollView)findViewById(R.id.content);
 
-        VolleySingleton.getInstance(this).getStoryName(chapterCurrent.getIdStory(),txtStoryName);
+        //VolleySingleton.getInstance(this).getStoryName(chapterCurrent.getIdStory(),txtStoryName);
 
         txtBackHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ChapterContentActivity.this, StartActivity.class));
+                //startActivity(new Intent(ChapterContentActivity.this, StartActivity.class));
             }
         });
 
         if(chapterCurrent!= null){
-            getChapterContent(URL,chapterCurrent.getIdStory(),chapterCurrent.getIdChapter());
+            getChapterContent(chapterCurrent.getIdStory(),chapterCurrent.getIdChapter());
         }
 
         btnNextChapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getChapterContent(URL,chapterCurrent.getIdStory(),sharedPreferences.getInt("next",0));
+                getChapterContent(chapterCurrent.getIdStory(),sharedPreferences.getInt("next",0));
             }
         });
 
         btnPreviousChapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getChapterContent(URL,chapterCurrent.getIdStory(),sharedPreferences.getInt("previous",0));
+                getChapterContent(chapterCurrent.getIdStory(),sharedPreferences.getInt("previous",0));
             }
         });
 
@@ -98,30 +99,62 @@ public class ChapterContentActivity extends AppCompatActivity {
                 chapterListFragment.setArguments(sendBundle);
                 sendBundle.putInt("idStory",chapterCurrent.getIdStory());
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.listChapter,chapterListFragment);
-                fragmentTransaction.commit();
+                //fragmentTransaction.commit();
             }
         });
 
     }
 
 
-    private void getChapterContent(String url, final int idStory, final int idChapter){
+    private void getChapterContent(final int idStory, final int idChapter){
 
-        StringRequest getContent = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        ;StringRequest getContent = new StringRequest(Request.Method.POST, URLManager.GET_CHAPTER_CONTENT.getUrl(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
                     editor.clear();
                     final JSONArray array = new JSONArray(response);
                     JSONObject next;
+                    JSONObject current;
                     JSONObject previous;
+//                    switch (array.length()){
+//                        case 1:
+//                            current = array.getJSONObject(0);
+//                            setContent(current);
+//                            break;
+//                        case 2:
+//                            if(idChapter==array.getJSONObject(0).getInt("IDChapter")){
+//                                current = array.getJSONObject(0);
+//                                setContent(current);
+//                                next = array.getJSONObject(1);
+//                                editor.putInt("next",next.getInt("IDChapter"));
+//                            }else {
+//                                current = array.getJSONObject(1);
+//                                setContent(current);
+//                                previous = array.getJSONObject(0);
+//                                editor.putInt("previous",previous.getInt("IDChapter"));
+//                            }
+//                            editor.commit();
+//                            break;
+//                        default:
+//                            current = array.getJSONObject(1);
+//                            setContent(current);
+//                            previous = array.getJSONObject(0);
+//                            next = array.getJSONObject(2);
+//                            editor.putInt("previous",previous.getInt("IDChapter"));
+//                            editor.putInt("next",next.getInt("IDChapter"));
+//                            editor.commit();
+//                            break;
+//                    }
+
                     for (int i=0;i<array.length();i++){
                         JSONObject chapter = array.getJSONObject(i);
                         if(chapter.getInt("IDChapter")==idChapter){
                             if(i==0){
-                                txtChapterName.setText(chapter.getString("ChapterName"));
-                                txtUploader.setText("Người đăng: "+chapter.getString("Uploader"));
-                                txtChapterContent.setText(chapter.getString("Content")+"\n\n\n");
+//                                txtChapterName.setText(chapter.getString("ChapterName"));
+//                                txtUploader.setText("Người đăng: "+chapter.getString("Uploader"));
+//                                txtChapterContent.setText(chapter.getString("Content")+"\n\n\n");
+                                setContent(chapter);
                                 next = array.getJSONObject(i+1);
                                 editor.putInt("next",next.getInt("IDChapter"));
                                 editor.commit();
@@ -129,18 +162,19 @@ public class ChapterContentActivity extends AppCompatActivity {
                                 scrollView.scrollTo(0,0);
 
                             }else if(i==array.length()-1){
-                                txtChapterName.setText(chapter.getString("ChapterName"));
-                                txtUploader.setText("Người đăng: "+chapter.getString("Uploader"));
-                                txtChapterContent.setText(chapter.getString("Content")+"\n\n\n");
+//                                txtChapterName.setText(chapter.getString("ChapterName"));
+//                                txtUploader.setText("Người đăng: "+chapter.getString("Uploader"));
+//                                txtChapterContent.setText(chapter.getString("Content")+"\n\n\n");
+                                setContent(chapter);
                                 previous = array.getJSONObject(i-1);
                                 editor.putInt("previous",previous.getInt("IDChapter"));
                                 editor.commit();
                                 btnNextChapter.setImageResource(R.drawable.next_gray_24);
                                 scrollView.scrollTo(0,0);
                             }else {
-                                txtChapterName.setText(chapter.getString("ChapterName"));
-                                txtUploader.setText("Người đăng: "+chapter.getString("Uploader"));
-                                txtChapterContent.setText(chapter.getString("Content")+"\n\n\n");
+//                                txtChapterName.setText(chapter.getString("ChapterName"));
+//                                txtUploader.setText("Người đăng: "+chapter.getString("Uploader"));
+//                                txtChapterContent.setText(chapter.getString("Content")+"\n\n\n");
                                 previous = array.getJSONObject(i-1);
                                 next = array.getJSONObject(i+1);
                                 editor.putInt("next",next.getInt("IDChapter"));
@@ -166,11 +200,22 @@ public class ChapterContentActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
                 params.put("idStory",""+idStory);
+                params.put("idChapter",""+idChapter);
                 return params;
             }
         };
 
         VolleySingleton.getInstance(this).addToRequestQueue(getContent);
+    }
+
+    private void setContent(JSONObject chapter){
+        try {
+            txtChapterName.setText(chapter.getString("ChapterName"));
+            txtUploader.setText("Người đăng: "+chapter.getString("Uploader"));
+            txtChapterContent.setText(chapter.getString("Content")+"\n\n");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

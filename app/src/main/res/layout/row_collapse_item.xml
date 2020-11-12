@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:layout_marginHorizontal="8dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <TextView
+        android:id="@+id/txt_search_story_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:lines="1" />
+        android:lines="1"
+        android:textSize="16sp"/>
+    <TextView
+        android:id="@+id/txt_search_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="1"
+        android:textSize="12sp"
+        android:layout_below="@+id/txt_search_story_name"/>
 </RelativeLayout>

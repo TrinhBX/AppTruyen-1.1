@@ -118,94 +118,7 @@ public class VolleySingleton {
         };
         getRequestQueue().add(rq);
     }
-    public void getStoryList(final String column, final String type, final List<Story> storyList, final RowStoryListAdapter rowStoryListAdapter, final int count){
-        storyList.clear();
-        StringRequest rqListStoryByType = new StringRequest(Request.Method.POST, GET_STORY_LIST_URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    for(int i = 0; i<jsonArray.length();i++){
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        int id = jsonObject.getInt("ID");
-                        String name = jsonObject.getString("Name");
-                        String author = jsonObject.getString("Author");
-                        String status = jsonObject.getString("Status");
-                        String type = jsonObject.getString("Type");
-                        String avatar = jsonObject.getString("Avatar");
-                        String review = jsonObject.getString("Review");
-                        storyList.add(new Story(id,name,author,status,type,avatar,review));
-                    }
-                    rowStoryListAdapter.setCount(count);
-                    rowStoryListAdapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    Toast.makeText(staticContext,"Exception!",Toast.LENGTH_LONG).show();
-                }
 
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(staticContext,"Error",Toast.LENGTH_LONG).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                if(column!= null){
-                    params.put("type", type);
-                    params.put("column", column);
-                }
-                return params;
-            }
-        };
-        getRequestQueue().add(rqListStoryByType);
-    }
-
- public void getStoryList(final String column, final String type, final List<Story> storyList, final RowStoryListAdapter rowStoryListAdapter){
-        StringRequest rqListStoryByType = new StringRequest(Request.Method.POST, GET_STORY_LIST_URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    for(int i = 0; i<jsonArray.length();i++){
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        int id = jsonObject.getInt("ID");
-                        String name = jsonObject.getString("Name");
-                        String author = jsonObject.getString("Author");
-                        String status = jsonObject.getString("Status");
-                        String type = jsonObject.getString("Type");
-                        String avatar = jsonObject.getString("Avatar");
-                        String review = jsonObject.getString("Review");
-                        storyList.add(new Story(id,name,author,status,type,avatar,review));
-                    }
-                    rowStoryListAdapter.setCount(storyList.size());
-                    rowStoryListAdapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    Toast.makeText(staticContext,"Exception!",Toast.LENGTH_LONG).show();
-                }
-
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(staticContext,"Error",Toast.LENGTH_LONG).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                if(column!= null){
-                    params.put("type", type);
-                    params.put("column", column);
-                }
-                return params;
-            }
-        };
-        getRequestQueue().add(rqListStoryByType);
-    }
 
     public void getStoryList(final String column, final String type, final List<Story> storyList, final ColumnStoryListAdapter columnStoryListAdapter){
         StringRequest rqListStoryByType = new StringRequest(Request.Method.POST, GET_STORY_LIST_URL, new Response.Listener<String>() {
@@ -226,50 +139,6 @@ public class VolleySingleton {
                     }
                     columnStoryListAdapter.setCount(storyList.size());
                     columnStoryListAdapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(staticContext,"Exception!",Toast.LENGTH_LONG).show();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(staticContext,"Error",Toast.LENGTH_LONG).show();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams(){
-                Map<String, String> params = new HashMap<>();
-                if(column!= null){
-                    params.put("type", type);
-                    params.put("column", column);
-                }
-                return params;
-            }
-        };
-        getRequestQueue().add(rqListStoryByType);
-    }
-
-    public void getStoryList(final String column, final String type, final List<Story> storyList, final ColumnStoryListAdapter columnStoryListAdapter, final int count){
-        StringRequest rqListStoryByType = new StringRequest(Request.Method.POST, GET_STORY_LIST_URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    for(int i = 0; i<jsonArray.length();i++){
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        int id = jsonObject.getInt("ID");
-                        String name = jsonObject.getString("Name");
-                        String author = jsonObject.getString("Author");
-                        String status = jsonObject.getString("Status");
-                        String type = jsonObject.getString("Type");
-                        String avatar = jsonObject.getString("Avatar");
-                        String review = jsonObject.getString("Review");
-                        storyList.add(new Story(id,name,author,status,type,avatar,review));
-                    }
-                    columnStoryListAdapter.setCount(count);
-                    columnStoryListAdapter.notifyDataSetChanged();
-//                    Toast.makeText(staticContext,"size "+storyList.size(),Toast.LENGTH_LONG).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(staticContext,"Exception!",Toast.LENGTH_LONG).show();

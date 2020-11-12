@@ -4,11 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.BookCaseFragment">
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="book case"
-        android:gravity="center"
-        android:textAllCaps="true"
-        android:textSize="30sp"/>
+        android:id="@+id/book_case_recycler"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

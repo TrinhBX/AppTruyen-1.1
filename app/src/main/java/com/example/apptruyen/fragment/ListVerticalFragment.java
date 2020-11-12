@@ -33,11 +33,11 @@ public class ListVerticalFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list_vertical,container,false);
         RecyclerView listVertical = (RecyclerView) view.findViewById(R.id.listVertical);
-        List<Story> storyList = new ArrayList<>();
+        List<Object> storyList = new ArrayList<>();
         RecycleAdapter recycleAdapter = new RecycleAdapter(getContext(),storyList,R.layout.row_story_list,"ROW");
         listVertical.setAdapter(recycleAdapter);
         listVertical.setLayoutManager(new LinearLayoutManager(getContext()));
-        VolleySingleton.getInstance(getActivity()).getList(recycleAdapter,storyList);
+        //VolleySingleton.getInstance(getActivity()).getList(recycleAdapter,storyList);
         return view;
     }
 }

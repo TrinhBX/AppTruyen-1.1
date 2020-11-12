@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +12,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +42,7 @@ import java.util.Map;
 public class SearchStoryFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecycleAdapter recycleAdapter;
-    private List<Story> storyList;
+    private List<Object> storyList;
     private EditText edtSearch;
     private TextView txtDeleteText;
     private TextView txtDeleteContext;
@@ -52,12 +54,18 @@ public class SearchStoryFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_search_story,container,false);
         txtDeleteContext = (TextView) view.findViewById(R.id.txtDeleteContext);
         edtSearch = (EditText) view.findViewById(R.id.edtSearch);
+        txtDeleteText = (TextView)view.findViewById(R.id.txtDeleteText);
 
         storyList = new ArrayList<>();
         recyclerView = (RecyclerView) view.findViewById(R.id.search_story_list);
-        recycleAdapter =  new RecycleAdapter(getContext(),storyList,R.layout.row_story_list,"ROW");
+        recycleAdapter =  new RecycleAdapter(getContext(),storyList,R.layout.row_collapse_item,"ROW_COLLAPSE");
         recyclerView.setAdapter(recycleAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        DividerItemDecoration dividerHorizontal =
+                new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+
+        recyclerView.addItemDecoration(dividerHorizontal);
+
 
 
         //Event
@@ -85,15 +93,7 @@ public class SearchStoryFragment extends Fragment {
             }
             @Override
             public void afterTextChanged(Editable s) {
-                if(edtSearch.getText().toString().trim().length()>0){
-                    getStoryList(edtSearch.getText().toString());
-                }else {
-                    storyList.clear();
-                    recycleAdapter.notifyDataSetChanged();
-                }
-
-                txtDeleteText = (TextView) view.findViewById(R.id.txtDeleteText);
-                if(!edtSearch.getText().toString().isEmpty()){
+                if(!s.toString().isEmpty()){
                     txtDeleteText.setBackground(getActivity().getResources().getDrawable(R.drawable.round_close_black));
                     txtDeleteText.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -101,8 +101,12 @@ public class SearchStoryFragment extends Fragment {
                             edtSearch.setText("");
                         }
                     });
-                } else  txtDeleteText.setBackground(getActivity().getResources().getDrawable(R.drawable.icon_search));
-
+                    getStoryList(edtSearch.getText().toString());
+                }else {
+                    txtDeleteText.setBackground(getActivity().getResources().getDrawable(R.drawable.icon_search));
+                    storyList.clear();
+                    recycleAdapter.notifyDataSetChanged();
+                }
             }
         });
         return view;
