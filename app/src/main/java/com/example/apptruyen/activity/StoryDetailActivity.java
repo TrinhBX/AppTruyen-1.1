@@ -5,8 +5,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
@@ -25,6 +28,7 @@ import com.example.apptruyen.R;
 import com.example.apptruyen.adapter.ColumnStoryListAdapter;
 import com.example.apptruyen.fragment.ChapterListFragment;
 import com.example.apptruyen.entities.Story;
+import com.example.apptruyen.utils.DatabaseHandler;
 import com.example.apptruyen.utils.VolleySingleton;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -44,10 +48,10 @@ public class StoryDetailActivity extends AppCompatActivity {
     private LinearLayout chapterListLayout;
     private Toolbar toolbar;
     private CollapsingToolbarLayout collapsingToolbarLayout;
-    private static final String URL = "https://mis58pm.000webhostapp.com/GetChapterList.php";
     private static final String TAG = "FRAGMENT_CHAPTER_LIST";
     private ImageButton btnBookmark;
-    private boolean isBookmark = false;
+    private Story story;
+    private DatabaseHandler databaseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +59,16 @@ public class StoryDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_story_detail);
 
         Intent intent = getIntent();
-        final Story story =(Story)intent.getSerializableExtra("story");
+        story =(Story)intent.getSerializableExtra("story");
 
         mapping();
         setSupportActionBar(toolbar);
+
+        databaseHandler= new DatabaseHandler(this);
+        if(databaseHandler.exitsStory(story.getIdStory())){
+            btnBookmark.setImageResource(R.drawable.on_bookmark_24);
+            databaseHandler.updateStory(story);
+        }
 
         if(story!=null){
             collapsingToolbarLayout.setTitle(story.getStoryName()); //set name story
@@ -67,7 +77,7 @@ public class StoryDetailActivity extends AppCompatActivity {
             txtStatus.setText("Tình Trạng: "+story.getStatus());
             txtType.setText("Thể loại: "+story.getType());
             txtReviewContent.setText(story.getReview());
-            txtChapterTotal.setText("Số chương:"+story.getNumberOfChapter());
+            txtChapterTotal.setText("Số chương: "+story.getNumberOfChapter());
             //avatar.setImageResource(R.drawable.image_broken);
             VolleySingleton.getInstance(StoryDetailActivity.this).setImage(story.getAvatar(),avatar);
 
@@ -92,14 +102,14 @@ public class StoryDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String s = "";
-                if(!isBookmark){
+                if(!databaseHandler.exitsStory(story.getIdStory())){
                     s= "Bookmarking";
                     btnBookmark.setImageResource(R.drawable.on_bookmark_24);
-                    isBookmark = true;
+                    databaseHandler.addStory(story);
                 } else {
                     s= "Un-Bookmarking";
                     btnBookmark.setImageResource(R.drawable.bookmark_24);
-                    isBookmark = false;
+                    databaseHandler.deleteStory(story.getIdStory());
                 }
                 Toast.makeText(StoryDetailActivity.this,s,Toast.LENGTH_SHORT).show();
             }

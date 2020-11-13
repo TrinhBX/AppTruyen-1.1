@@ -9,6 +9,8 @@ public class Story implements Serializable {
     private String status;
     private String type;
     private String avatar;
+    private int numberOfChapter;
+    private String review;
 
     public Story(int idStory, String storyName, String author, String status, String type, String avatar, int numberOfChapter, String review) {
         this.idStory = idStory;
@@ -20,18 +22,6 @@ public class Story implements Serializable {
         this.numberOfChapter = numberOfChapter;
         this.review = review;
     }
-
-    private int numberOfChapter;
-    private String review;
-
-
-    public Story(String storyName, String author, String status, String type) {
-        this.storyName = storyName;
-        this.author = author;
-        this.status = status;
-        this.type = type;
-    }
-
 
     public Story(int idStory, String storyName, String author, String status, String type, String review) {
         this.idStory = idStory;
@@ -113,5 +103,19 @@ public class Story implements Serializable {
 
     public void setNumberOfChapter(int numberOfChapter) {
         this.numberOfChapter = numberOfChapter;
+    }
+
+    @Override
+    public String toString() {
+        return "Story{" +
+                "idStory=" + idStory +
+                ", storyName='" + storyName + '\'' +
+                ", author='" + author + '\'' +
+                ", status='" + status + '\'' +
+                ", type='" + type + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", numberOfChapter=" + numberOfChapter +
+                ", review='" + review + '\'' +
+                '}';
     }
 }

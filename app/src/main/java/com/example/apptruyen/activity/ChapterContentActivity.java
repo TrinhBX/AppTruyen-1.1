@@ -31,9 +31,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChapterContentActivity extends AppCompatActivity {
-    private static final String URL = "https://mis58pm.000webhostapp.com/GetChapterList.php";
     private Intent intent;
-
     private TextView txtStoryName,txtChapterName,txtUploader, txtChapterContent,txtChapterList;
     private TextView txtBackHome;
     private Chapter chapterCurrent;
@@ -107,8 +105,7 @@ public class ChapterContentActivity extends AppCompatActivity {
 
 
     private void getChapterContent(final int idStory, final int idChapter){
-
-        ;StringRequest getContent = new StringRequest(Request.Method.POST, URLManager.GET_CHAPTER_CONTENT.getUrl(), new Response.Listener<String>() {
+        StringRequest getContent = new StringRequest(Request.Method.POST, URLManager.GET_CHAPTER_CONTENT.getUrl(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
