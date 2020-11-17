@@ -12,9 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.apptruyen.R;
-import com.example.apptruyen.adapter.RecycleAdapter;
-import com.example.apptruyen.entities.Story;
-import com.example.apptruyen.utils.VolleySingleton;
+import com.example.apptruyen.adapter.RecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,10 +32,10 @@ public class ListVerticalFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list_vertical,container,false);
         RecyclerView listVertical = (RecyclerView) view.findViewById(R.id.listVertical);
         List<Object> storyList = new ArrayList<>();
-        RecycleAdapter recycleAdapter = new RecycleAdapter(getContext(),storyList,R.layout.row_story_list,"ROW");
-        listVertical.setAdapter(recycleAdapter);
+        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(getContext(),storyList,R.layout.row_story_list,"ROW");
+        listVertical.setAdapter(recyclerAdapter);
         listVertical.setLayoutManager(new LinearLayoutManager(getContext()));
-        //VolleySingleton.getInstance(getActivity()).getList(recycleAdapter,storyList);
+        //VolleySingleton.getInstance(getActivity()).getList(recyclerAdapter,storyList);
         return view;
     }
 }

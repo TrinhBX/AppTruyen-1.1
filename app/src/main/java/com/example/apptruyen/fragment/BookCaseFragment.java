@@ -11,10 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.apptruyen.R;
-import com.example.apptruyen.adapter.RecycleAdapter;
+import com.example.apptruyen.adapter.RecyclerAdapter;
 import com.example.apptruyen.entities.Story;
 import com.example.apptruyen.utils.DatabaseHandler;
-import com.example.apptruyen.utils.TagManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ public class BookCaseFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private List<Object> listBookcase;
-    private RecycleAdapter adapter;
+    private RecyclerAdapter adapter;
     private DatabaseHandler databaseHandler;
     public BookCaseFragment() {
         // Required empty public constructor
@@ -43,7 +42,7 @@ public class BookCaseFragment extends Fragment {
             listBookcase.add((Object) story);
         }
         recyclerView = view.findViewById(R.id.book_case_recycler);
-        adapter = new RecycleAdapter(getContext(),listBookcase,R.layout.row_story_list, "ROW_FULL");
+        adapter = new RecyclerAdapter(getContext(),listBookcase,R.layout.row_story_list, "ROW_FULL");
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;

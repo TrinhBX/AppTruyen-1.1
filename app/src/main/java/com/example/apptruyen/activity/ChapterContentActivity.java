@@ -7,10 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -65,6 +67,9 @@ public class ChapterContentActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //startActivity(new Intent(ChapterContentActivity.this, StartActivity.class));
+                Intent intent = new Intent(ChapterContentActivity.this, StartActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
 
@@ -97,7 +102,9 @@ public class ChapterContentActivity extends AppCompatActivity {
                 chapterListFragment.setArguments(sendBundle);
                 sendBundle.putInt("idStory",chapterCurrent.getIdStory());
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.listChapter,chapterListFragment);
-                //fragmentTransaction.commit();
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                Toast.makeText(ChapterContentActivity.this,"CLICK",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -213,6 +220,21 @@ public class ChapterContentActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        intent = getIntent();
+        intent.getData();
+        Chapter newChapter = (Chapter) intent.getSerializableExtra("chapter");
+
+        Log.e("INTENT","idStory ="+newChapter.getIdStory()+", "+newChapter.getIdChapter());
+        Log.e("DATA",""+intent.getData());
+        chapterCurrent = (Chapter) intent.getSerializableExtra("chapter");
+        Toast.makeText(ChapterContentActivity.this,intent.getDataString(),Toast.LENGTH_LONG);
+        getChapterContent(chapterCurrent.getIdStory(),chapterCurrent.getIdChapter());
     }
 
     @Override

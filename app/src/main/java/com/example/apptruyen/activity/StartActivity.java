@@ -22,7 +22,9 @@ import java.util.List;
 public class StartActivity extends AppCompatActivity {
     private List<Story> list;
     private Toolbar toolbar;
-    MenuItem menuItem;
+    private FragmentTransaction transaction;
+    private LibraryFragment libraryFragment;
+    private BookCaseFragment bookCaseFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,19 +32,32 @@ public class StartActivity extends AppCompatActivity {
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //set bottom bar
+        libraryFragment = new LibraryFragment();
+        bookCaseFragment = new BookCaseFragment();
+        transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.frame_container,libraryFragment);
+        //transaction.addToBackStack(null);
+        transaction.commit();
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        loadFragment(new LibraryFragment(),"");
+        //loadFragment(libraryFragment,"");
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment fragment;
                 switch (item.getItemId()) {
                     case R.id.library_bottom_bar:
-                        loadFragment(new LibraryFragment(),"");
+                        loadFragment(libraryFragment,"");
+                        //transaction.replace(R.id.frame_container,libraryFragment);
+                        //transaction.addToBackStack(null);
+                        //transaction.commit();
                         toolbar.setTitle("Thư viện");
                         return true;
                     case R.id.bookcase_bottom_bar:
-                        loadFragment(new BookCaseFragment(),"");
+                        loadFragment(bookCaseFragment,"");
+                        //transaction.replace(R.id.frame_container,bookCaseFragment);
+                        //transaction.addToBackStack(null);
+                        //transaction.commit();
                         toolbar.setTitle("Tủ sách");
                         return true;
                 }
@@ -55,6 +70,7 @@ public class StartActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment,tag);
         transaction.addToBackStack(null);
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         transaction.commit();
     }
 

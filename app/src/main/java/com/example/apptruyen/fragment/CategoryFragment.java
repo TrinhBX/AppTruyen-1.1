@@ -18,7 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.apptruyen.R;
 import com.example.apptruyen.utils.VolleySingleton;
-import com.example.apptruyen.adapter.RecycleAdapter;
+import com.example.apptruyen.adapter.RecyclerAdapter;
 import com.example.apptruyen.entities.Story;
 import com.example.apptruyen.utils.URLManager;
 import com.google.android.material.tabs.TabLayout;
@@ -36,7 +36,7 @@ public class CategoryFragment extends Fragment {
     private Toolbar categoryToolbar;
     private TabLayout categoryTabs;
     private RecyclerView recyclerView;
-    RecycleAdapter recycleAdapter;
+    RecyclerAdapter recyclerAdapter;
     private List<Object> storyList;
 
     @Override
@@ -48,8 +48,8 @@ public class CategoryFragment extends Fragment {
         //set default
         storyList = new ArrayList<>();
         recyclerView = (RecyclerView)view.findViewById(R.id.category_list);
-        recycleAdapter = new RecycleAdapter(getContext(),storyList,R.layout.row_story_list,"ROW_FULL");
-        recyclerView.setAdapter(recycleAdapter);
+        recyclerAdapter = new RecyclerAdapter(getContext(),storyList,R.layout.row_story_list,"ROW_FULL");
+        recyclerView.setAdapter(recyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         getStoryList("Tien hiep");
 
@@ -92,7 +92,7 @@ public class CategoryFragment extends Fragment {
                         int numberOfChapters = jsonObject.getInt("NumberOfChapters");
                         storyList.add(new Story(id,name,author,status,type,avatar,numberOfChapters,review));
                     }
-                    recycleAdapter.notifyDataSetChanged();
+                    recyclerAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

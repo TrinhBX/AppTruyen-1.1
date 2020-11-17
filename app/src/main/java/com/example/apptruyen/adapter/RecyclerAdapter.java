@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,14 +21,15 @@ import com.example.apptruyen.entities.Story;
 
 import java.util.List;
 
-public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHolder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     private Context context;
     private List<Object> lists;
     private int itemLayout;
     private String itemTag;
-    private List<Object> chapterList;
+    private static final int REQUEST_CODE = 1;
 
-    public RecycleAdapter(Context context, List<Object> lists, int itemLayout,String itemTag) {
+
+    public RecyclerAdapter(Context context, List<Object> lists, int itemLayout, String itemTag) {
         this.context = context;
         this.lists = lists;
         this.itemLayout = itemLayout;
@@ -56,7 +56,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         //Story story = lists.get(position);
         switch (itemTag){
             case "ROW_FULL":
-                setRow(holder,(Story)lists.get(position));
+                setRowFull(holder,(Story)lists.get(position));
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -91,7 +91,7 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
         return lists.size();
     }
 
-    private void setRow(ViewHolder holder,Story story){
+    private void setRowFull(ViewHolder holder,Story story){
         TextView txtName = (TextView) holder.txtName;
         txtName.setText(story.getStoryName());
         TextView txtAuthor = (TextView) holder.txtAuthor;

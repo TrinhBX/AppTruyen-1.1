@@ -18,8 +18,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.apptruyen.R;
 import com.example.apptruyen.adapter.ChapterListAdapter;
 import com.example.apptruyen.adapter.ColumnStoryListAdapter;
-import com.example.apptruyen.adapter.RecycleAdapter;
-import com.example.apptruyen.adapter.RowStoryListAdapter;
+import com.example.apptruyen.adapter.RecyclerAdapter;
 import com.example.apptruyen.entities.Chapter;
 import com.example.apptruyen.entities.Story;
 
@@ -78,7 +77,7 @@ public class VolleySingleton {
         getRequestQueue().add(imageRequest);
     }
 
-    public void getList(final RecycleAdapter adapter, final List<Story> list){
+    public void getList(final RecyclerAdapter adapter, final List<Story> list){
         StringRequest rq = new StringRequest(Request.Method.POST, GET_STORY_LIST_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

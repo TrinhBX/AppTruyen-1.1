@@ -27,6 +27,7 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
 
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/storyDetailToolbar"
                 android:layout_width="match_parent"
@@ -168,8 +169,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawableEnd="@drawable/more_16"
-                    android:text="Chua co chuong"
-                    android:gravity="end" />
+                    android:text="Chưa có chương"
+                    android:gravity="end"
+                    android:lines="1"
+                    android:ellipsize="end"/>
             </LinearLayout>
 
             <LinearLayout

@@ -3,6 +3,7 @@ package com.example.apptruyen.fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,7 +13,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.apptruyen.R;
 import com.example.apptruyen.utils.VolleySingleton;
-import com.example.apptruyen.adapter.RecycleAdapter;
+import com.example.apptruyen.adapter.RecyclerAdapter;
 import com.example.apptruyen.entities.Story;
 import com.example.apptruyen.utils.URLManager;
 
@@ -41,7 +41,7 @@ import java.util.Map;
 
 public class SearchStoryFragment extends Fragment {
     private RecyclerView recyclerView;
-    private RecycleAdapter recycleAdapter;
+    private RecyclerAdapter recyclerAdapter;
     private List<Object> storyList;
     private EditText edtSearch;
     private TextView txtDeleteText;
@@ -58,8 +58,9 @@ public class SearchStoryFragment extends Fragment {
 
         storyList = new ArrayList<>();
         recyclerView = (RecyclerView) view.findViewById(R.id.search_story_list);
-        recycleAdapter =  new RecycleAdapter(getContext(),storyList,R.layout.row_collapse_item,"ROW_COLLAPSE");
-        recyclerView.setAdapter(recycleAdapter);
+        recyclerView.setHasFixedSize(true);
+        recyclerAdapter =  new RecyclerAdapter(getContext(),storyList,R.layout.row_collapse_item,"ROW_COLLAPSE");
+        recyclerView.setAdapter(recyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         DividerItemDecoration dividerHorizontal =
                 new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
@@ -72,11 +73,14 @@ public class SearchStoryFragment extends Fragment {
         txtDeleteContext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                edtSearch.setText("");
+//                edtSearch.setText("");
                 Fragment searchStoryFragment =  getActivity().getSupportFragmentManager().findFragmentByTag("SEARCH_FRAGMENT");
                 if(searchStoryFragment!=null){
-                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().remove(searchStoryFragment);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction().remove(searchStoryFragment);
+                    fragmentManager.popBackStack();
                     fragmentTransaction.commit();
+
                 }
             }
         });
@@ -105,7 +109,7 @@ public class SearchStoryFragment extends Fragment {
                 }else {
                     txtDeleteText.setBackground(getActivity().getResources().getDrawable(R.drawable.icon_search));
                     storyList.clear();
-                    recycleAdapter.notifyDataSetChanged();
+                    recyclerAdapter.notifyDataSetChanged();
                 }
             }
         });
@@ -130,7 +134,7 @@ public class SearchStoryFragment extends Fragment {
                         int numberOfChapters = jsonObject.getInt("NumberOfChapters");
                         storyList.add(new Story(id,name,author,status,type,avatar,numberOfChapters,review));
                     }
-                    recycleAdapter.notifyDataSetChanged();
+                    recyclerAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -3,6 +3,7 @@ package com.example.apptruyen.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
@@ -29,6 +30,7 @@ import com.example.apptruyen.adapter.ColumnStoryListAdapter;
 import com.example.apptruyen.fragment.ChapterListFragment;
 import com.example.apptruyen.entities.Story;
 import com.example.apptruyen.utils.DatabaseHandler;
+import com.example.apptruyen.utils.URLManager;
 import com.example.apptruyen.utils.VolleySingleton;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -80,6 +82,7 @@ public class StoryDetailActivity extends AppCompatActivity {
             txtChapterTotal.setText("Số chương: "+story.getNumberOfChapter());
             //avatar.setImageResource(R.drawable.image_broken);
             VolleySingleton.getInstance(StoryDetailActivity.this).setImage(story.getAvatar(),avatar);
+            getStoryDetail(story.getIdStory());
 
         }
 
@@ -114,7 +117,6 @@ public class StoryDetailActivity extends AppCompatActivity {
                 Toast.makeText(StoryDetailActivity.this,s,Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     private void mapping(){
@@ -132,15 +134,43 @@ public class StoryDetailActivity extends AppCompatActivity {
         btnBookmark = (ImageButton) findViewById(R.id.btn_bookmark);
     }
 
+    private void getStoryDetail(final int idStory){
+        StringRequest rq = new StringRequest(Request.Method.POST, URLManager.GET_STORY_DETAIL.getUrl(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject object = new JSONObject(response);
+                    txtLatestChapter.setText(object.getString("NameLastChapter"));
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("idStory",""+idStory);
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(this).addToRequestQueue(rq);
+    }
 
     @Override
     protected void onPause() {
         super.onPause();
         ChapterListFragment chapterListFragment = (ChapterListFragment)getSupportFragmentManager().findFragmentById(R.id.listChapter);
         if(chapterListFragment !=null){
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().remove(chapterListFragment);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction().remove(chapterListFragment);
             fragmentTransaction.commit();
+            fragmentManager.popBackStack();
         }
     }
 }

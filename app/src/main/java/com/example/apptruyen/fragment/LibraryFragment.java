@@ -24,8 +24,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.apptruyen.R;
+import com.example.apptruyen.adapter.RecyclerAdapter;
 import com.example.apptruyen.utils.VolleySingleton;
-import com.example.apptruyen.adapter.RecycleAdapter;
 import com.example.apptruyen.entities.Story;
 import com.example.apptruyen.utils.URLManager;
 
@@ -69,7 +69,9 @@ public class LibraryFragment extends Fragment {
         });
         //set story list for recycleview
         recyclerView = (RecyclerView)view.findViewById(R.id.library_story_list); //mapping
-        //RecycleAdapter recycleAdapter = new RecycleAdapter(getActivity(),)
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemViewCacheSize(5);
+        //RecyclerAdapter recyclerAdapter = new RecyclerAdapter(getActivity(),)
         getStoryList();
 
         return view;
@@ -108,8 +110,9 @@ public class LibraryFragment extends Fragment {
                         int numberOfChapters = jsonObject.getInt("NumberOfChapters");
                         stories.add(new Story(id,name,author,status,type,avatar,numberOfChapters,review));
                     }
-                    RecycleAdapter adapter = new RecycleAdapter(getContext(),stories,R.layout.row_story_list,"ROW_FULL");
+                    RecyclerAdapter adapter = new RecyclerAdapter(getContext(),stories,R.layout.row_story_list,"ROW_FULL");
                     recyclerView.setAdapter(adapter);
+
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 } catch (JSONException e) {
                     e.printStackTrace();
