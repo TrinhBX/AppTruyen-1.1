@@ -20,7 +20,7 @@
         android:layout_marginBottom="3dp"
         android:layout_toEndOf="@+id/imgAvatar"
         android:text="@string/story_name"
-        android:textColor="#E8009688"
+        android:textColor="@color/color_text_name"
         android:textSize="14sp" />
 
     <TextView

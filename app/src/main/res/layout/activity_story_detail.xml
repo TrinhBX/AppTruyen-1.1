@@ -18,16 +18,13 @@
             android:layout_width="match_parent"
             android:layout_height="280dp"
             android:background="@drawable/img_background2"
+            android:paddingEnd="12dp"
             app:collapsedTitleGravity="center"
             app:collapsedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Collapsed"
-            app:expandedTitleGravity="top"
-            app:expandedTitleMarginStart="140dp"
-            app:expandedTitleMarginTop="70dp"
+            app:expandedTitleGravity="top|center"
             app:expandedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Expanded"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
-
-
-
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            tool:ignore="RtlSymmetry">
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/storyDetailToolbar"
                 android:layout_width="match_parent"
@@ -50,21 +47,20 @@
 
         <ImageView
             android:id="@+id/imgAvatar"
-            android:layout_width="120dp"
-            android:layout_height="170dp"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:scaleType="fitXY"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginBottom="10dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/nameStory"
             android:layout_toEndOf="@+id/imgAvatar"
-            android:layout_marginTop="30dp"
             android:gravity="center_vertical"
             android:paddingHorizontal="10dp"
             android:textColor="@color/white"
-            android:textSize="16sp"/>
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/txtAuthor"
@@ -74,7 +70,7 @@
             android:gravity="center_vertical"
             android:paddingHorizontal="10dp"
             android:textColor="@color/white"
-            android:textSize="18sp"
+            android:textSize="14sp"
             android:layout_below="@id/nameStory"/>
 
         <TextView
@@ -86,7 +82,7 @@
             android:gravity="center_vertical"
             android:paddingHorizontal="10dp"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/txtType"
@@ -97,7 +93,7 @@
             android:gravity="center_vertical"
             android:paddingHorizontal="10dp"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/txtChapterTotal"
@@ -108,7 +104,7 @@
             android:gravity="center_vertical"
             android:paddingHorizontal="10dp"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -126,7 +122,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <LinearLayout
                 android:id="@+id/top"
                 android:layout_width="match_parent"
@@ -135,11 +130,14 @@
                 android:weightSum="10"
                 app:layout_collapseMode="pin">
                 <Button
+                    android:id="@+id/btn_reading"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="8"
-                    android:text="Doc ngay"
-                    android:textAllCaps="true"/>
+                    android:text="Đọc ngay"
+                    android:textAllCaps="true"
+                    android:foregroundTint="@color/colorAccent"
+                    android:backgroundTint="#A7AAB6"/>
                 <ImageButton
                     android:id="@+id/btn_bookmark"
                     android:layout_width="0dp"
@@ -199,6 +197,7 @@
                     android:id="@+id/txtReviewContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textSize="14sp"
                     android:padding="10dp" />
 
             </LinearLayout>
@@ -225,12 +224,13 @@
                     android:id="@+id/gvStoryOfAuthor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white" />
+                    android:background="@color/white"
+                    />
             </LinearLayout>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
     <FrameLayout
         android:id="@+id/listChapter"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

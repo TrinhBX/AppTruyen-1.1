@@ -1,58 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_gravity="center_horizontal"
-    android:background="@drawable/bg_book"
-    android:paddingVertical="10dp"
-    android:paddingHorizontal="8dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <androidx.constraintlayout.widget.ConstraintLayout
+<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="80dp"
+    android:layout_height="120dp"
+    android:layout_margin="12dp"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
-        android:layout_height="150dp">
-
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
         <ImageView
-            android:id="@+id/imgColAvatar"
+            android:id="@+id/imgAvatarCardView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/todo"
-            android:scaleType="fitXY"
-            android:src="@drawable/image_broken"
-            tools:layout_editor_absoluteX="5dp"
-            tools:layout_editor_absoluteY="0dp" />
-
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:contentDescription="TODO"
+            android:scaleType="fitXY" />
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_marginTop="28dp"
-            android:background="@drawable/img_status"
-            android:paddingVertical="3dp"
-            android:paddingHorizontal="5dp"
-            android:text="Full"
-            android:textColor="@color/colorWhile"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="C.100"
-            android:paddingVertical="3dp"
-            android:paddingHorizontal="5dp"
-            android:textColor="@color/colorWhile"
-            android:background="#FF9800"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="30dp"
-        android:textSize="12sp"
-        android:gravity="center"
-        android:id="@+id/txtColStoryName"
-        android:textColor="#000000" />
-</LinearLayout>
+            android:id="@+id/txtNameCardView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textSize="10sp"
+            android:gravity="center"
+            android:textColor="@color/grayText"
+            tools:ignore="SmallSp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.cardview.widget.CardView>

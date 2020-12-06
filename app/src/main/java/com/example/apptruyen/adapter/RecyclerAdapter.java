@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,8 +17,11 @@ import com.example.apptruyen.R;
 import com.example.apptruyen.activity.ChapterContentActivity;
 import com.example.apptruyen.activity.StoryDetailActivity;
 import com.example.apptruyen.entities.Chapter;
+import com.example.apptruyen.interfaces.ILoadMore;
 import com.example.apptruyen.utils.VolleySingleton;
 import com.example.apptruyen.entities.Story;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -26,7 +30,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private List<Object> lists;
     private int itemLayout;
     private String itemTag;
-    private static final int REQUEST_CODE = 1;
 
 
     public RecyclerAdapter(Context context, List<Object> lists, int itemLayout, String itemTag) {
@@ -44,10 +47,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         LayoutInflater inflater = LayoutInflater.from(context);
 
         // Inflate the custom layout
-        View storyView = inflater.inflate(itemLayout, parent, false);
+        View itemView = inflater.inflate(itemLayout, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(storyView,itemTag);
+        ViewHolder viewHolder = new ViewHolder(itemView,itemTag);
         return viewHolder;
     }
 
@@ -79,8 +82,43 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     }
                 });
                 break;
-            case "CHAPTER_LIST":
+            case "CHAPTER_LIST_1":
                 setChapterList(holder,(Chapter)lists.get(position));
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Chapter chapter = (Chapter)lists.get(position);
+                        Intent intent = new Intent(context, ChapterContentActivity.class);
+                        intent.putExtra("chapter",chapter);
+                        context.startActivity(intent);
+                    }
+                });
+                break;
+            case "CHAPTER_LIST_2":
+                setChapterList(holder,(Chapter)lists.get(position));
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Chapter chapter = (Chapter)lists.get(position);
+                        Intent intent = new Intent(context, ChapterContentActivity.class);
+                        intent.putExtra("chapter",chapter);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);
+                    }
+                });
+                break;
+            case "CARD_VIEW":
+                setCardView(holder,(Story)lists.get(position));
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, StoryDetailActivity.class);
+                        Story story = (Story)lists.get(position);
+                        intent.putExtra("story",story);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        context.startActivity(intent);
+                    }
+                });
                 break;
         }
 
@@ -115,19 +153,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private void setChapterList(ViewHolder holder, final Chapter chapter){
         TextView txtChapterName = (TextView) holder.txtChapterName;
         txtChapterName.setText(chapter.getChapterName());
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.e("CHAPTER", "id Story = "+chapter.getIdStory()+ ", id chapter = "+chapter.getIdChapter());
-                Intent intent = new Intent(context, ChapterContentActivity.class);
-                intent.putExtra("chapter",chapter);
-                context.startActivity(intent);
-            }
-        });
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    private void setCardView(ViewHolder cardView, Story story ){
+        ImageView imgAvatarCardView = (ImageView) cardView.imgAvatarCardView;
+        VolleySingleton.getInstance(context).setImage(story.getAvatar(),imgAvatarCardView);
+
+        TextView txtNameCardView = (TextView)cardView.txtNameCardView;
+        txtNameCardView.setText(story.getStoryName());
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         //View of ROW_FULL
         public TextView txtName;
@@ -144,22 +180,30 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         //View of CHAPTER_LIST
         public TextView txtChapterName;
 
+        //View of CardView
+        public ImageView imgAvatarCardView;
+        public TextView txtNameCardView;
+
         public ViewHolder(View itemView,String itemTag) {
             super(itemView);
             switch (itemTag){
                 case "ROW_FULL":
-                    mappingRow();
+                    mappingRow(itemView);
                     break;
                 case "ROW_COLLAPSE":
-                    mappingRowCollapse();
+                    mappingRowCollapse(itemView);
                     break;
-                case "CHAPTER_LIST":
-                    mappingChapterList();
+                case "CHAPTER_LIST_1":
+                case "CHAPTER_LIST_2":
+                    mappingChapterList(itemView);
+                    break;
+                case "CARD_VIEW":
+                    mappingCardView(itemView);
                     break;
             }
 
         }
-        private void mappingRow(){
+        private void mappingRow(@NotNull View itemView){
             txtName = (TextView) itemView.findViewById(R.id.txtStoryName);
             txtAuthor = (TextView) itemView.findViewById(R.id.txtAuthor);
             txtStatus = (TextView) itemView.findViewById(R.id.txtStatus);
@@ -167,13 +211,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             txtTotalChapter = (TextView) itemView.findViewById(R.id.txtTotalChapter);
             avatar = (ImageView)itemView.findViewById(R.id.imgAvatar);
         }
-        private void mappingRowCollapse(){
+        private void mappingRowCollapse(@NotNull View itemView){
             txtSearchStoryName =(TextView) itemView.findViewById(R.id.txt_search_story_name);
             txtSearchAuthor = (TextView) itemView.findViewById(R.id.txt_search_author);
         }
 
-        private void mappingChapterList(){
+        private void mappingChapterList(@NotNull View itemView){
             txtChapterName = (TextView) itemView.findViewById((R.id.txtChapterName));
+        }
+
+        private void mappingCardView(@NotNull View itemView){
+            imgAvatarCardView = (ImageView) itemView.findViewById(R.id.imgAvatarCardView);
+            txtNameCardView =(TextView) itemView.findViewById(R.id.txtNameCardView);
         }
     }
 }

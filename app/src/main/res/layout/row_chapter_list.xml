@@ -7,5 +7,7 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:layout_gravity="center_horizontal"
+        android:lines="1"
+        android:ellipsize="end"
         android:id="@+id/txtChapterName"/>
 </LinearLayout>

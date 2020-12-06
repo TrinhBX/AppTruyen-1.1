@@ -5,6 +5,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -27,6 +29,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.apptruyen.R;
 import com.example.apptruyen.adapter.ColumnStoryListAdapter;
+import com.example.apptruyen.adapter.RecyclerAdapter;
+import com.example.apptruyen.entities.Chapter;
 import com.example.apptruyen.fragment.ChapterListFragment;
 import com.example.apptruyen.entities.Story;
 import com.example.apptruyen.utils.DatabaseHandler;
@@ -52,6 +56,7 @@ public class StoryDetailActivity extends AppCompatActivity {
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private static final String TAG = "FRAGMENT_CHAPTER_LIST";
     private ImageButton btnBookmark;
+    private Button btnReading;
     private Story story;
     private DatabaseHandler databaseHandler;
 
@@ -65,16 +70,18 @@ public class StoryDetailActivity extends AppCompatActivity {
 
         mapping();
         setSupportActionBar(toolbar);
+        //toolbar.
 
         databaseHandler= new DatabaseHandler(this);
         if(databaseHandler.exitsStory(story.getIdStory())){
             btnBookmark.setImageResource(R.drawable.on_bookmark_24);
             databaseHandler.updateStory(story);
+            btnReading.setText("Đọc tiếp");
         }
 
         if(story!=null){
             collapsingToolbarLayout.setTitle(story.getStoryName()); //set name story
-            //txtStoryName.setText(story.getStoryName());
+            txtStoryName.setText(story.getStoryName());
             txtAuthor.setText("Tác giả: "+story.getAuthor());
             txtStatus.setText("Tình Trạng: "+story.getStatus());
             txtType.setText("Thể loại: "+story.getType());
@@ -92,7 +99,7 @@ public class StoryDetailActivity extends AppCompatActivity {
 
                 Bundle sendBundle = new Bundle();
                 sendBundle.putInt("idStory",story.getIdStory());
-
+                sendBundle.putString("nameStory",story.getStoryName());
                 ChapterListFragment chapterListFragment = new ChapterListFragment();
                 chapterListFragment.setArguments(sendBundle);
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.listChapter,chapterListFragment,TAG);
@@ -104,7 +111,7 @@ public class StoryDetailActivity extends AppCompatActivity {
         btnBookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String s = "";
+                String s;
                 if(!databaseHandler.exitsStory(story.getIdStory())){
                     s= "Bookmarking";
                     btnBookmark.setImageResource(R.drawable.on_bookmark_24);
@@ -117,6 +124,13 @@ public class StoryDetailActivity extends AppCompatActivity {
                 Toast.makeText(StoryDetailActivity.this,s,Toast.LENGTH_SHORT).show();
             }
         });
+
+        setListStoryOfAuthor();
+
+        SharedPreferences sharedPreferences = getSharedPreferences("STORY_NAME",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("storyName",story.getStoryName());
+        editor.apply();
     }
 
     private void mapping(){
@@ -132,6 +146,18 @@ public class StoryDetailActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.storyDetailToolbar);
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapse);
         btnBookmark = (ImageButton) findViewById(R.id.btn_bookmark);
+        btnReading = (Button) findViewById(R.id.btn_reading);
+    }
+    private void onClickButtonReading(final int idStory, final int idChapter){
+        btnReading.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sentIntent = new Intent(StoryDetailActivity.this,ChapterContentActivity.class);
+                Chapter chapter = new Chapter(idStory,idChapter);
+                sentIntent.putExtra("chapter",chapter);
+                startActivity(sentIntent);
+            }
+        });
     }
 
     private void getStoryDetail(final int idStory){
@@ -141,7 +167,9 @@ public class StoryDetailActivity extends AppCompatActivity {
                 try {
                     JSONObject object = new JSONObject(response);
                     txtLatestChapter.setText(object.getString("NameLastChapter"));
-
+                    if(!databaseHandler.exitsStory(story.getIdStory())){
+                        onClickButtonReading(story.getIdStory(),object.getInt("IDFirstChapter"));
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -153,9 +181,57 @@ public class StoryDetailActivity extends AppCompatActivity {
             }
         }){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<>();
                 params.put("idStory",""+idStory);
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(this).addToRequestQueue(rq);
+    }
+
+    private void setListStoryOfAuthor(){
+        final List<Object> objectList = new ArrayList<>();
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.gvStoryOfAuthor);
+        final RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this,objectList,R.layout.card_item,"CARD_VIEW");
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(recyclerAdapter);
+        StringRequest rq = new StringRequest(Request.Method.POST, URLManager.GET_STORY_LIST_URL.getUrl(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray array = new JSONArray(response);
+                    for(int i = 0; i<array.length();i++){
+                        JSONObject jsonObject = array.getJSONObject(i);
+                        if(jsonObject.getInt("ID")!=story.getIdStory()){
+                            int id = jsonObject.getInt("ID");
+                            String name = jsonObject.getString("Name");
+                            String author = jsonObject.getString("Author");
+                            String status = jsonObject.getString("Status");
+                            String type = jsonObject.getString("Type");
+                            String avatar = jsonObject.getString("Avatar");
+                            String review = jsonObject.getString("Review");
+                            int numberOfChapters = jsonObject.getInt("NumberOfChapters");
+                            objectList.add(new Story(id,name,author,status,type,avatar,numberOfChapters,review));
+                        }
+                    }
+                    recyclerAdapter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("column","author");
+                params.put("condition",story.getAuthor());
                 return params;
             }
         };

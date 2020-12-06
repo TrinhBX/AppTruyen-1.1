@@ -41,7 +41,9 @@ import java.util.Map;
 public class LibraryFragment extends Fragment {
     private Toolbar toolbar;
     private TextView txtMenuCategory;
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
+    private RecyclerAdapter adapter;
+    private List<Object> stories;
     public LibraryFragment() {
     }
 
@@ -57,21 +59,24 @@ public class LibraryFragment extends Fragment {
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
 
         //set click event for button Category (TextView)
-        txtMenuCategory = (TextView)view.findViewById(R.id.txtMenuCategory); //mapping
-        txtMenuCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_container2, new CategoryFragment());
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
+//        txtMenuCategory = (TextView)view.findViewById(R.id.txtMenuCategory); //mapping
+//        txtMenuCategory.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                transaction.replace(R.id.frame_container2, new CategoryFragment());
+//                transaction.addToBackStack(null);
+//                transaction.commit();
+//            }
+//        });
         //set story list for recycleview
+        stories = new ArrayList<>();
         recyclerView = (RecyclerView)view.findViewById(R.id.library_story_list); //mapping
+        adapter = new RecyclerAdapter(getContext(),stories,R.layout.row_story_list,"ROW_FULL");
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemViewCacheSize(5);
-        //RecyclerAdapter recyclerAdapter = new RecyclerAdapter(getActivity(),)
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         getStoryList();
 
         return view;
@@ -85,7 +90,7 @@ public class LibraryFragment extends Fragment {
         @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.frame_container2, new SearchStoryFragment(),"SEARCH_FRAGMENT");
+        transaction.replace(R.id.frame_container2, new SearchStoryFragment(),"SEARCH_FRAGMENT");
         transaction.addToBackStack(null);
         transaction.commit();
         return true;
@@ -95,7 +100,7 @@ public class LibraryFragment extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLManager.GET_STORY_LIST_URL.getUrl(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                List<Object> stories = new ArrayList<>();
+                stories.clear();
                 try {
                     JSONArray jsonArray = new JSONArray(response);
                     for(int i = 0; i<jsonArray.length();i++){
@@ -110,10 +115,7 @@ public class LibraryFragment extends Fragment {
                         int numberOfChapters = jsonObject.getInt("NumberOfChapters");
                         stories.add(new Story(id,name,author,status,type,avatar,numberOfChapters,review));
                     }
-                    RecyclerAdapter adapter = new RecyclerAdapter(getContext(),stories,R.layout.row_story_list,"ROW_FULL");
-                    recyclerView.setAdapter(adapter);
-
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -39,11 +39,14 @@ public class CategoryFragment extends Fragment {
     RecyclerAdapter recyclerAdapter;
     private List<Object> storyList;
 
+    public CategoryFragment() {
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view =  inflater.inflate(R.layout.fragment_category, container, false);
-        categoryToolbar = (Toolbar)view.findViewById(R.id.category_toolbar);
+        //categoryToolbar = (Toolbar)view.findViewById(R.id.category_toolbar);
 
         //set default
         storyList = new ArrayList<>();

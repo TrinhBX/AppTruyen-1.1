@@ -41,6 +41,7 @@ public class ChapterContentActivity extends AppCompatActivity {
     private ScrollView scrollView;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private static final String TAG = "FRAGMENT_CHAPTER_LIST";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +61,10 @@ public class ChapterContentActivity extends AppCompatActivity {
         txtBackHome = (TextView)findViewById(R.id.txtBackHome);
         txtChapterList = (TextView)findViewById(R.id.txtChapterList);
         scrollView =(ScrollView)findViewById(R.id.content);
+
+        //Set story name
+        SharedPreferences data = getSharedPreferences("STORY_NAME",MODE_PRIVATE);
+        txtStoryName.setText(data.getString("storyName",""));
 
         //VolleySingleton.getInstance(this).getStoryName(chapterCurrent.getIdStory(),txtStoryName);
 
@@ -101,10 +106,9 @@ public class ChapterContentActivity extends AppCompatActivity {
                 Bundle sendBundle = new Bundle();
                 chapterListFragment.setArguments(sendBundle);
                 sendBundle.putInt("idStory",chapterCurrent.getIdStory());
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.listChapter,chapterListFragment);
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().add(R.id.listChapter,chapterListFragment,TAG);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-                Toast.makeText(ChapterContentActivity.this,"CLICK",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -116,8 +120,11 @@ public class ChapterContentActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    editor.clear();
+                    editor.clear().apply();
+                    //editor.commit();
                     final JSONArray array = new JSONArray(response);
+                    Log.e("LENGTH",""+array.length());
+                    //Log.e("LENGTH", "next ")
                     JSONObject next;
                     JSONObject current;
                     JSONObject previous;
@@ -140,7 +147,7 @@ public class ChapterContentActivity extends AppCompatActivity {
 //                            }
 //                            editor.commit();
 //                            break;
-//                        default:
+//                        case 3:
 //                            current = array.getJSONObject(1);
 //                            setContent(current);
 //                            previous = array.getJSONObject(0);
@@ -155,9 +162,6 @@ public class ChapterContentActivity extends AppCompatActivity {
                         JSONObject chapter = array.getJSONObject(i);
                         if(chapter.getInt("IDChapter")==idChapter){
                             if(i==0){
-//                                txtChapterName.setText(chapter.getString("ChapterName"));
-//                                txtUploader.setText("Người đăng: "+chapter.getString("Uploader"));
-//                                txtChapterContent.setText(chapter.getString("Content")+"\n\n\n");
                                 setContent(chapter);
                                 next = array.getJSONObject(i+1);
                                 editor.putInt("next",next.getInt("IDChapter"));
@@ -166,9 +170,6 @@ public class ChapterContentActivity extends AppCompatActivity {
                                 scrollView.scrollTo(0,0);
 
                             }else if(i==array.length()-1){
-//                                txtChapterName.setText(chapter.getString("ChapterName"));
-//                                txtUploader.setText("Người đăng: "+chapter.getString("Uploader"));
-//                                txtChapterContent.setText(chapter.getString("Content")+"\n\n\n");
                                 setContent(chapter);
                                 previous = array.getJSONObject(i-1);
                                 editor.putInt("previous",previous.getInt("IDChapter"));
@@ -179,6 +180,7 @@ public class ChapterContentActivity extends AppCompatActivity {
 //                                txtChapterName.setText(chapter.getString("ChapterName"));
 //                                txtUploader.setText("Người đăng: "+chapter.getString("Uploader"));
 //                                txtChapterContent.setText(chapter.getString("Content")+"\n\n\n");
+                                setContent(chapter);
                                 previous = array.getJSONObject(i-1);
                                 next = array.getJSONObject(i+1);
                                 editor.putInt("next",next.getInt("IDChapter"));
@@ -245,6 +247,6 @@ public class ChapterContentActivity extends AppCompatActivity {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction().remove(chapterListFragment);
             fragmentTransaction.commit();
         }
-        editor.clear();
+        editor.clear().apply();
     }
 }

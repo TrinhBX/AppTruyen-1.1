@@ -3,78 +3,81 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryBackground"
     xmlns:tool="http://schemas.android.com/tools"
     tool:context=".activity.StartActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-        <LinearLayout
-            android:id="@+id/navLayout"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:orientation="horizontal"
-            android:weightSum="4"
-            android:background="@color/white">
-            <TextView
-                android:id="@+id/txtMenuCategory"
-                style="@style/headerMenu"
-                android:drawableTop="@drawable/categorize_48"
-                android:text="@string/categories"/>
-            <TextView
-                style="@style/headerMenu"
-                android:drawableTop="@drawable/rank_48"
-                android:text="Xếp hạng"/>
-            <TextView
-                style="@style/headerMenu"
-                android:drawableTop="@drawable/filters_48"
-                android:text="Bộ lọc"/>
-            <TextView
-                style="@style/headerMenu"
-                android:drawableTop="@drawable/news_48"
-                android:text="Tin tức"/>
-        </LinearLayout>
+<!--        <LinearLayout-->
+<!--            android:id="@+id/navLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="90dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:weightSum="4"-->
+<!--            android:background="@color/white">-->
+<!--            <TextView-->
+<!--                android:id="@+id/txtMenuCategory"-->
+<!--                style="@style/headerMenu"-->
+<!--                android:drawableTop="@drawable/categorize_48"-->
+<!--                android:text="@string/categories"/>-->
+<!--            <TextView-->
+<!--                style="@style/headerMenu"-->
+<!--                android:drawableTop="@drawable/rank_48"-->
+<!--                android:text="Xếp hạng"/>-->
+<!--            <TextView-->
+<!--                style="@style/headerMenu"-->
+<!--                android:drawableTop="@drawable/filters_48"-->
+<!--                android:text="Bộ lọc"/>-->
+<!--            <TextView-->
+<!--                style="@style/headerMenu"-->
+<!--                android:drawableTop="@drawable/news_48"-->
+<!--                android:text="Tin tức"/>-->
+<!--        </LinearLayout>-->
 
-        <RelativeLayout
-            android:id="@+id/allStory"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/navLayout"
-            android:layout_marginTop="15dp">
+<!--        <RelativeLayout-->
+<!--            android:id="@+id/allStory"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_below="@id/navLayout"-->
+<!--            android:layout_marginTop="15dp">-->
+<!--            <TextView-->
+<!--                android:id="@+id/txtAllStory"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="TẤT CẢ TRUYỆN" />-->
 
-            <LinearLayout
-                android:id="@+id/allStoryHeader"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:paddingHorizontal="15dp"
-                android:weightSum="4"
-                android:background="@color/white">
 
-                <TextView
-                    android:id="@+id/txtAllStory"
-                    style="@style/storyListLabel"
-                    android:text="TẤT CẢ TRUYỆN" />
+<!--            <LinearLayout-->
+<!--                android:id="@+id/allStoryHeader"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="30dp"-->
+<!--                android:paddingHorizontal="15dp"-->
+<!--                android:weightSum="4"-->
+<!--                android:background="@color/white">-->
 
-                <ImageButton
-                    android:id="@+id/btnChangeView"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:paddingStart="50dp"
-                    android:paddingEnd="0dp"
-                    android:src="@drawable/column_view"
-                    android:background="@color/white"/>
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:id="@+id/txtAllStory"-->
+<!--                    style="@style/storyListLabel"-->
+<!--                    android:text="TẤT CẢ TRUYỆN" />-->
+
+<!--                <ImageButton-->
+<!--                    android:id="@+id/btnChangeView"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:paddingStart="50dp"-->
+<!--                    android:paddingEnd="0dp"-->
+<!--                    android:src="@drawable/column_view"-->
+<!--                    android:background="@color/white"/>-->
+<!--            </LinearLayout>-->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/library_story_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/allStoryHeader"
-                android:layout_marginBottom="50dp"/>
+                android:layout_height="match_parent"/>
         </RelativeLayout>
 
-    </RelativeLayout>
+<!--    </RelativeLayout>-->
 
 
 

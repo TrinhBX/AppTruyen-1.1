@@ -16,18 +16,4 @@ public class Validator {
         }
         return true;
     }
-    public static String cutString(String string){
-        if(string.length()>25){
-            int i = 25;
-            while (true){
-                if(string.charAt(i)!= ' '){
-                    i--;
-                }else {
-                    string = string.substring(0,i)+"\n"+string.substring(i+1);
-                    break;
-                }
-            }
-        }
-        return string;
-    }
 }

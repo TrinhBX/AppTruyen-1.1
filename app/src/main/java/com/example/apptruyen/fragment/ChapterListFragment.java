@@ -1,13 +1,16 @@
 package com.example.apptruyen.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,7 +48,7 @@ public class ChapterListFragment extends Fragment {
     private List<Object> chapterList;
     private RecyclerView recyclerView;
     private RecyclerAdapter adapter;
-
+    private TextView txtDeleteTextChapter;
     private static final String TAG = "FRAGMENT_CHAPTER_LIST";
 
 
@@ -57,7 +60,8 @@ public class ChapterListFragment extends Fragment {
 
         chapterList = new ArrayList<>();
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_chapter_list);
-        adapter = new RecyclerAdapter(getActivity(),chapterList,R.layout.row_chapter_list,"CHAPTER_LIST");
+        String tag = (getActivity().getLocalClassName().equals("activity.ChapterContentActivity"))?"CHAPTER_LIST_2":"CHAPTER_LIST_1";
+        adapter = new RecyclerAdapter(getActivity(),chapterList,R.layout.row_chapter_list,tag);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         DividerItemDecoration dividerHorizontal = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
@@ -68,7 +72,6 @@ public class ChapterListFragment extends Fragment {
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                chapterList.clear();
             }
 
             @Override
@@ -79,7 +82,21 @@ public class ChapterListFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                getChapterList(s.toString());
+                if(!s.toString().isEmpty()){
+                    txtDeleteTextChapter.setBackground(getActivity().getResources().getDrawable(R.drawable.round_close_black));
+                    txtDeleteTextChapter.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            edtSearch.setText("");
+                        }
+                    });
+                    getChapterList("Chương "+s.toString());
+
+                } else {
+                    txtDeleteTextChapter.setBackground(getActivity().getResources().getDrawable(R.drawable.icon_search));
+                    chapterList.clear();
+                    getChapterList("");
+                }
             }
         });
         btnClose.setOnClickListener(new View.OnClickListener() {
@@ -99,28 +116,29 @@ public class ChapterListFragment extends Fragment {
     }
     private void mapping(View view){
         btnClose = (ImageButton) view.findViewById(R.id.btnClose);
-        edtSearch = (EditText) view.findViewById(R.id.edtSearch);
+        edtSearch = (EditText) view.findViewById(R.id.edtSearchChapter);
         idStory = getArguments().getInt("idStory");
-
+        txtDeleteTextChapter = (TextView)view.findViewById(R.id.txtDeleteTextChapter);
     }
 
     private void getChapterList(final String condition){
         chapterList.clear();
-        List<Object> list = new ArrayList<>();
         StringRequest request = new StringRequest(Request.Method.POST, URLManager.GET_CHAPTER_LIST_URL.getUrl(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.e("RESULT",response);
                 try {
                     JSONArray jsonArray = new JSONArray(response);
                     for(int i=0;i<jsonArray.length();i++){
                         JSONObject chapter = jsonArray.getJSONObject(i);
-                        if(!condition.isEmpty()){
-                            if(chapter.getString("ChapterName").contains(condition)){
-                                chapterList.add(new Chapter(chapter.getInt("IDStory"),chapter.getInt("IDChapter"),chapter.getString("ChapterName")));
-                            }
-                        }else {
-                            chapterList.add(new Chapter(chapter.getInt("IDStory"),chapter.getInt("IDChapter"),chapter.getString("ChapterName")));
-                        }
+                        chapterList.add(new Chapter(chapter.getInt("IDStory"),chapter.getInt("IDChapter"),chapter.getString("ChapterName")));
+//                        if(!condition.isEmpty()){
+//                            if(chapter.getString("ChapterName").contains(condition)){
+//                                chapterList.add(new Chapter(chapter.getInt("IDStory"),chapter.getInt("IDChapter"),chapter.getString("ChapterName")));
+//                            }
+//                        }else {
+//                            chapterList.add(new Chapter(chapter.getInt("IDStory"),chapter.getInt("IDChapter"),chapter.getString("ChapterName")));
+//                        }
 
                     }
                     adapter.notifyDataSetChanged();
@@ -138,6 +156,7 @@ public class ChapterListFragment extends Fragment {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
                 params.put("idStory",""+idStory);
+                params.put("condition",condition);
                 return params;
             }
         };

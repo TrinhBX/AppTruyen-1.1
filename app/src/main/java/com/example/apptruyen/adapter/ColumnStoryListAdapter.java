@@ -64,13 +64,13 @@ public class ColumnStoryListAdapter extends BaseAdapter {
         convertView = inflater.inflate(R.layout.card_item,null);
 
         //Anh xa
-        ImageView avatar = (ImageView) convertView.findViewById(R.id.imgColAvatar);
-        TextView txtColStoryName = (TextView) convertView.findViewById(R.id.txtColStoryName);
+        //ImageView avatar = (ImageView) convertView.findViewById(R.id.imgColAvatar);
+        //TextView txtColStoryName = (TextView) convertView.findViewById(R.id.txtColStoryName);
 
         //Set value
         //imageView.setImageResource(storyList.get(position).getImage());
-        txtColStoryName.setText(storyList.get(position).getStoryName());
-        VolleySingleton.getInstance(context).setImage(storyList.get(position).getAvatar(),avatar);
+        //txtColStoryName.setText(storyList.get(position).getStoryName());
+        //VolleySingleton.getInstance(context).setImage(storyList.get(position).getAvatar(),avatar);
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,16 +75,18 @@ public class SearchStoryFragment extends Fragment {
             @Override
             public void onClick(View view) {
 //                edtSearch.setText("");
-                Fragment searchStoryFragment =  getActivity().getSupportFragmentManager().findFragmentByTag("SEARCH_FRAGMENT");
+                Fragment searchStoryFragment =  getActivity().getSupportFragmentManager().findFragmentById(R.id.frame_container2);
                 if(searchStoryFragment!=null){
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction().remove(searchStoryFragment);
                     fragmentManager.popBackStack();
                     fragmentTransaction.commit();
-
+                    edtSearch.clearFocus();
                 }
             }
         });
+
+
 
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override

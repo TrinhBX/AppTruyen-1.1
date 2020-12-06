@@ -34,19 +34,26 @@
                 android:contentDescription="TODO" />
         </LinearLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:orientation="horizontal">
-
+            android:layout_height="?actionBarSize">
             <EditText
-                android:id="@+id/edtSearch"
+                android:id="@+id/edtSearchChapter"
                 style="@style/search_bar"
-                android:autofillHints="@string/search"
                 android:hint="Tìm chương"
                 android:inputType="number"
-                android:background="@drawable/bg_edt"/>
-        </LinearLayout>
+                android:autofillHints="@string/search"
+                android:background="@drawable/bg_edt"
+                android:paddingEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/txtDeleteTextChapter"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="end|center"
+                android:layout_marginHorizontal="20dp"
+                android:gravity="center" />
+        </FrameLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView

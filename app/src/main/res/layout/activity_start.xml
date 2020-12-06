@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryBackground"
     xmlns:tool="http://schemas.android.com/tools">
+
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -19,31 +21,47 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_scrollFlags="noScroll|enterAlways"
-                app:title="Thư viện" />
-        </com.google.android.material.appbar.AppBarLayout>
+                android:gravity="center_horizontal"
+                app:layout_scrollFlags="noScroll|enterAlways">
 
-        <FrameLayout
-            android:id="@+id/frame_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="?actionBarSize"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+                <TextView
+                    android:id="@+id/title_start_activity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Thư viện"
+                    android:layout_marginEnd="12dp"
+                    style="@style/text_title_actionbar"/>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="bottom"
             android:background="@color/colorPrimaryBackground"
-            app:itemIconTint="@color/black"
-            app:itemTextColor="@color/black"
+            android:layout_height="?actionBarSize"
+            android:layout_gravity="bottom"
+            app:labelVisibilityMode="labeled"
+            app:elevation="16dp"
+            app:itemIconTint="@drawable/nav_item_colors"
+            app:itemTextColor="@drawable/nav_item_colors"
             app:menu="@menu/bottom_menu" />
 
     </FrameLayout>
     <FrameLayout
+
+        android:id="@+id/frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/frame_container2"/>
+        android:layout_marginVertical="?actionBarSize"
+        app:layout_anchor="@+id/frameLayout"
+        app:layout_anchorGravity="center"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
+    <FrameLayout
+        android:id="@+id/frame_container2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_anchor="@+id/frameLayout"
+        app:layout_anchorGravity="center" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
