@@ -2,20 +2,15 @@ package com.example.apptruyen.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,7 +23,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.apptruyen.R;
-import com.example.apptruyen.adapter.ColumnStoryListAdapter;
 import com.example.apptruyen.adapter.RecyclerAdapter;
 import com.example.apptruyen.entities.Chapter;
 import com.example.apptruyen.fragment.ChapterListFragment;
@@ -166,10 +160,16 @@ public class StoryDetailActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
+
                     txtLatestChapter.setText(object.getString("NameLastChapter"));
                     if(!databaseHandler.exitsStory(story.getIdStory())){
                         onClickButtonReading(story.getIdStory(),object.getInt("IDFirstChapter"));
                     }
+                    SharedPreferences sharedPreferences = getSharedPreferences("LIST_CHAPTER",MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("id_last_chapter",object.getInt("IDLastChapter"));
+                    editor.putInt("id_first_chapter",object.getInt("IDFirstChapter"));
+                    editor.commit();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

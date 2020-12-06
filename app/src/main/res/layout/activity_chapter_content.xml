@@ -87,7 +87,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/back_arrow24"
+                android:src="@drawable/back_gray24"
                 android:background="@color/white" />
 
             <TextView
@@ -104,9 +104,15 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/next_24"
+                android:src="@drawable/next_gray_24"
                 android:background="@color/white"/>
         </LinearLayout>
+        <FrameLayout
+            android:id="@+id/contentFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?actionBarSize"
+            android:layout_marginBottom="40dp"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
     <FrameLayout
         android:id="@+id/listChapter"

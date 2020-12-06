@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,7 +125,6 @@ public class ChapterListFragment extends Fragment {
         StringRequest request = new StringRequest(Request.Method.POST, URLManager.GET_CHAPTER_LIST_URL.getUrl(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("RESULT",response);
                 try {
                     JSONArray jsonArray = new JSONArray(response);
                     for(int i=0;i<jsonArray.length();i++){
