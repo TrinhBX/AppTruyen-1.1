@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +25,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.apptruyen.R;
+import com.example.apptruyen.utils.TypeItems;
 import com.example.apptruyen.utils.VolleySingleton;
 import com.example.apptruyen.adapter.RecyclerAdapter;
 import com.example.apptruyen.entities.Story;
@@ -60,7 +60,7 @@ public class SearchStoryFragment extends Fragment {
         storyList = new ArrayList<>();
         recyclerView = (RecyclerView) view.findViewById(R.id.search_story_list);
         recyclerView.setHasFixedSize(true);
-        recyclerAdapter =  new RecyclerAdapter(getContext(),storyList,R.layout.row_collapse_item,"ROW_COLLAPSE");
+        recyclerAdapter =  new RecyclerAdapter(getContext(),storyList,R.layout.row_collapse_item, TypeItems.ROW_STORY_COLLAPSE);
         recyclerView.setAdapter(recyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         DividerItemDecoration dividerHorizontal =
@@ -98,6 +98,7 @@ public class SearchStoryFragment extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
+            @SuppressLint("ResourceAsColor")
             @Override
             public void afterTextChanged(Editable s) {
                 if(!s.toString().isEmpty()){

@@ -28,6 +28,8 @@ import com.example.apptruyen.entities.Chapter;
 import com.example.apptruyen.fragment.ChapterListFragment;
 import com.example.apptruyen.entities.Story;
 import com.example.apptruyen.utils.DatabaseHandler;
+import com.example.apptruyen.utils.SharedPreferencesKey;
+import com.example.apptruyen.utils.TypeItems;
 import com.example.apptruyen.utils.URLManager;
 import com.example.apptruyen.utils.VolleySingleton;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -81,7 +83,6 @@ public class StoryDetailActivity extends AppCompatActivity {
             txtType.setText("Thể loại: "+story.getType());
             txtReviewContent.setText(story.getReview());
             txtChapterTotal.setText("Số chương: "+story.getNumberOfChapter());
-            //avatar.setImageResource(R.drawable.image_broken);
             VolleySingleton.getInstance(StoryDetailActivity.this).setImage(story.getAvatar(),avatar);
             getStoryDetail(story.getIdStory());
 
@@ -121,7 +122,7 @@ public class StoryDetailActivity extends AppCompatActivity {
 
         setListStoryOfAuthor();
 
-        SharedPreferences sharedPreferences = getSharedPreferences("STORY_NAME",MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences(""+SharedPreferencesKey.STORY_NAME,MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("storyName",story.getStoryName());
         editor.apply();
@@ -165,7 +166,7 @@ public class StoryDetailActivity extends AppCompatActivity {
                     if(!databaseHandler.exitsStory(story.getIdStory())){
                         onClickButtonReading(story.getIdStory(),object.getInt("IDFirstChapter"));
                     }
-                    SharedPreferences sharedPreferences = getSharedPreferences("LIST_CHAPTER",MODE_PRIVATE);
+                    SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesKey.ID_CHAPTER_FIRST_LAST+"",MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt("id_last_chapter",object.getInt("IDLastChapter"));
                     editor.putInt("id_first_chapter",object.getInt("IDFirstChapter"));
@@ -193,7 +194,7 @@ public class StoryDetailActivity extends AppCompatActivity {
     private void setListStoryOfAuthor(){
         final List<Object> objectList = new ArrayList<>();
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.gvStoryOfAuthor);
-        final RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this,objectList,R.layout.card_item,"CARD_VIEW");
+        final RecyclerAdapter recyclerAdapter = new RecyclerAdapter(this,objectList,R.layout.card_item, TypeItems.CARD_STORY);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(recyclerAdapter);
         StringRequest rq = new StringRequest(Request.Method.POST, URLManager.GET_STORY_LIST_URL.getUrl(), new Response.Listener<String>() {

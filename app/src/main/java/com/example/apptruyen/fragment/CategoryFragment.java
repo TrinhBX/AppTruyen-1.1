@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.apptruyen.R;
+import com.example.apptruyen.utils.TypeItems;
 import com.example.apptruyen.utils.VolleySingleton;
 import com.example.apptruyen.adapter.RecyclerAdapter;
 import com.example.apptruyen.entities.Story;
@@ -51,7 +52,7 @@ public class CategoryFragment extends Fragment {
         //set default
         storyList = new ArrayList<>();
         recyclerView = (RecyclerView)view.findViewById(R.id.category_list);
-        recyclerAdapter = new RecyclerAdapter(getContext(),storyList,R.layout.row_story_list,"ROW_FULL");
+        recyclerAdapter = new RecyclerAdapter(getContext(),storyList,R.layout.row_story_list, TypeItems.ROW_STORY_FULL);
         recyclerView.setAdapter(recyclerAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         getStoryList("Tien hiep");

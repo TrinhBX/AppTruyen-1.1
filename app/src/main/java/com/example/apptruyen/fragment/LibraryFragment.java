@@ -25,6 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.apptruyen.R;
 import com.example.apptruyen.adapter.RecyclerAdapter;
+import com.example.apptruyen.utils.TypeItems;
 import com.example.apptruyen.utils.VolleySingleton;
 import com.example.apptruyen.entities.Story;
 import com.example.apptruyen.utils.URLManager;
@@ -57,22 +58,9 @@ public class LibraryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_library, container, false);
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
-
-        //set click event for button Category (TextView)
-//        txtMenuCategory = (TextView)view.findViewById(R.id.txtMenuCategory); //mapping
-//        txtMenuCategory.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.frame_container2, new CategoryFragment());
-//                transaction.addToBackStack(null);
-//                transaction.commit();
-//            }
-//        });
-        //set story list for recycleview
         stories = new ArrayList<>();
         recyclerView = (RecyclerView)view.findViewById(R.id.library_story_list); //mapping
-        adapter = new RecyclerAdapter(getContext(),stories,R.layout.row_story_list,"ROW_FULL");
+        adapter = new RecyclerAdapter(getContext(),stories,R.layout.row_story_list, TypeItems.ROW_STORY_FULL);
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemViewCacheSize(5);
         recyclerView.setAdapter(adapter);

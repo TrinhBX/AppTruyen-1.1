@@ -1,6 +1,5 @@
 package com.example.apptruyen.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.apptruyen.R;
 import com.example.apptruyen.adapter.RecyclerAdapter;
+import com.example.apptruyen.utils.TypeItems;
 import com.example.apptruyen.utils.URLManager;
 import com.example.apptruyen.utils.VolleySingleton;
 import com.example.apptruyen.entities.Chapter;
@@ -59,8 +59,8 @@ public class ChapterListFragment extends Fragment {
 
         chapterList = new ArrayList<>();
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_chapter_list);
-        String tag = (getActivity().getLocalClassName().equals("activity.ChapterContentActivity"))?"CHAPTER_LIST_2":"CHAPTER_LIST_1";
-        adapter = new RecyclerAdapter(getActivity(),chapterList,R.layout.row_chapter_list,tag);
+        TypeItems typeItems = (getActivity().getLocalClassName().equals("activity.ChapterContentActivity"))?TypeItems.ROW_CHAPTER_CONTENT:TypeItems.ROW_CHAPTER_DETAIL;
+        adapter = new RecyclerAdapter(getActivity(),chapterList,R.layout.row_chapter_list,typeItems);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         DividerItemDecoration dividerHorizontal = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
@@ -130,14 +130,6 @@ public class ChapterListFragment extends Fragment {
                     for(int i=0;i<jsonArray.length();i++){
                         JSONObject chapter = jsonArray.getJSONObject(i);
                         chapterList.add(new Chapter(chapter.getInt("IDStory"),chapter.getInt("IDChapter"),chapter.getString("ChapterName")));
-//                        if(!condition.isEmpty()){
-//                            if(chapter.getString("ChapterName").contains(condition)){
-//                                chapterList.add(new Chapter(chapter.getInt("IDStory"),chapter.getInt("IDChapter"),chapter.getString("ChapterName")));
-//                            }
-//                        }else {
-//                            chapterList.add(new Chapter(chapter.getInt("IDStory"),chapter.getInt("IDChapter"),chapter.getString("ChapterName")));
-//                        }
-
                     }
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {

@@ -13,6 +13,7 @@ import com.example.apptruyen.R;
 import com.example.apptruyen.fragment.ChapterListFragment;
 import com.example.apptruyen.entities.Chapter;
 import com.example.apptruyen.fragment.ContentChapterFragment;
+import com.example.apptruyen.utils.SharedPreferencesKey;
 
 public class ChapterContentActivity extends AppCompatActivity {
     private Intent intent;
@@ -42,7 +43,7 @@ public class ChapterContentActivity extends AppCompatActivity {
         fragmentTransaction.commit();
 
         //Set story name
-        SharedPreferences data = getSharedPreferences("STORY_NAME",MODE_PRIVATE);
+        SharedPreferences data = getSharedPreferences(""+SharedPreferencesKey.STORY_NAME,MODE_PRIVATE);
         txtStoryName.setText(data.getString("storyName",""));
 
         txtBackHome.setOnClickListener(new View.OnClickListener() {

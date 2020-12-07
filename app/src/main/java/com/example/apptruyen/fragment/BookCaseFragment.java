@@ -14,6 +14,7 @@ import com.example.apptruyen.R;
 import com.example.apptruyen.adapter.RecyclerAdapter;
 import com.example.apptruyen.entities.Story;
 import com.example.apptruyen.utils.DatabaseHandler;
+import com.example.apptruyen.utils.TypeItems;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +43,7 @@ public class BookCaseFragment extends Fragment {
             listBookcase.add((Object) story);
         }
         recyclerView = view.findViewById(R.id.book_case_recycler);
-        adapter = new RecyclerAdapter(getContext(),listBookcase,R.layout.row_story_list, "ROW_FULL");
+        adapter = new RecyclerAdapter(getContext(),listBookcase,R.layout.row_story_list, TypeItems.ROW_STORY_FULL);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         return view;

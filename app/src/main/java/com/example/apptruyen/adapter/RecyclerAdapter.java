@@ -18,6 +18,7 @@ import com.example.apptruyen.activity.ChapterContentActivity;
 import com.example.apptruyen.activity.StoryDetailActivity;
 import com.example.apptruyen.entities.Chapter;
 import com.example.apptruyen.interfaces.ILoadMore;
+import com.example.apptruyen.utils.TypeItems;
 import com.example.apptruyen.utils.VolleySingleton;
 import com.example.apptruyen.entities.Story;
 
@@ -30,13 +31,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     private List<Object> lists;
     private int itemLayout;
     private String itemTag;
+    private TypeItems typeItems;
 
 
-    public RecyclerAdapter(Context context, List<Object> lists, int itemLayout, String itemTag) {
+//    public RecyclerAdapter(Context context, List<Object> lists, int itemLayout, String itemTag) {
+//        this.context = context;
+//        this.lists = lists;
+//        this.itemLayout = itemLayout;
+//        this.itemTag = itemTag;
+//    }
+    public RecyclerAdapter(Context context, List<Object> lists, int itemLayout, TypeItems typeItems) {
         this.context = context;
         this.lists = lists;
         this.itemLayout = itemLayout;
-        this.itemTag = itemTag;
+        this.typeItems = typeItems;
     }
 
 
@@ -50,15 +58,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         View itemView = inflater.inflate(itemLayout, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(itemView,itemTag);
+        ViewHolder viewHolder = new ViewHolder(itemView,typeItems);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         //Story story = lists.get(position);
-        switch (itemTag){
-            case "ROW_FULL":
+        //Log.e("A", TypeItems.CARD_STORY+"");
+        switch (typeItems){
+            case ROW_STORY_FULL:
                 setRowFull(holder,(Story)lists.get(position));
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -70,7 +79,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     }
                 });
                 break;
-            case "ROW_COLLAPSE":
+            case ROW_STORY_COLLAPSE:
                 setRowCollapse(holder,(Story)lists.get(position));
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -82,7 +91,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     }
                 });
                 break;
-            case "CHAPTER_LIST_1":
+            case ROW_CHAPTER_DETAIL:
                 setChapterList(holder,(Chapter)lists.get(position));
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -94,7 +103,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     }
                 });
                 break;
-            case "CHAPTER_LIST_2":
+            case ROW_CHAPTER_CONTENT:
                 setChapterList(holder,(Chapter)lists.get(position));
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -107,7 +116,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     }
                 });
                 break;
-            case "CARD_VIEW":
+            case CARD_STORY:
                 setCardView(holder,(Story)lists.get(position));
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -184,20 +193,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         public ImageView imgAvatarCardView;
         public TextView txtNameCardView;
 
-        public ViewHolder(View itemView,String itemTag) {
+        public ViewHolder(View itemView,TypeItems typeItems) {
             super(itemView);
-            switch (itemTag){
-                case "ROW_FULL":
+            switch (typeItems){
+                case ROW_STORY_FULL:
                     mappingRow(itemView);
                     break;
-                case "ROW_COLLAPSE":
+                case ROW_STORY_COLLAPSE:
                     mappingRowCollapse(itemView);
                     break;
-                case "CHAPTER_LIST_1":
-                case "CHAPTER_LIST_2":
+                case ROW_CHAPTER_DETAIL:
+                case ROW_CHAPTER_CONTENT:
                     mappingChapterList(itemView);
                     break;
-                case "CARD_VIEW":
+                case CARD_STORY:
                     mappingCardView(itemView);
                     break;
             }

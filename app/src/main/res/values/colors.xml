@@ -7,7 +7,7 @@
     <color name="white">#ffff</color>
     <color name="black">#000000</color>
     <color name="colorWhile">#FFFFFF</color>
-    <color name="colorTransparentWhite">#FAFAFA</color>
+    <color name="colorTransparentWhite">#00FFFFFF</color>
     <color name="transparent">#5B040404</color>
     <color name="colorPrimaryBackground">#F3FAFAFA</color>
     <color name="color_text_name">#E8009688</color>

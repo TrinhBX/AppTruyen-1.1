@@ -30,6 +30,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String NUMBER_OF_CHAPTER = "numberOfChapter";
     private static final String AVATAR = "avatar";
     private static final String REVIEW = "review";
+    private static final String CHAPTER_READING = "chapterReading";
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -37,8 +38,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String create_stories_table = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s INTEGER, %s TEXT)",
-                TABLE_NAME, ID_STORY, STORY_NAME, AUTHOR, STATUS,TYPES,AVATAR,NUMBER_OF_CHAPTER,REVIEW);
+        String create_stories_table = String.format("CREATE TABLE %s(%s INTEGER PRIMARY KEY, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s TEXT, %s INTEGER, %s TEXT,%s INTEGER)",
+                TABLE_NAME, ID_STORY, STORY_NAME, AUTHOR, STATUS,TYPES,AVATAR,NUMBER_OF_CHAPTER,REVIEW,CHAPTER_READING);
         sqLiteDatabase.execSQL(create_stories_table);
     }
 
@@ -52,6 +53,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(drop_stories_table);
         onCreate(sqLiteDatabase);
     }
+
     public void addStory(Story story) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
@@ -109,6 +111,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     //Update
+
     public void updateStory(Story story) {
         SQLiteDatabase db = this.getWritableDatabase();
 

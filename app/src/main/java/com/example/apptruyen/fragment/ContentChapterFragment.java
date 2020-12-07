@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.apptruyen.R;
 import com.example.apptruyen.entities.Chapter;
+import com.example.apptruyen.utils.SharedPreferencesKey;
 import com.example.apptruyen.utils.URLManager;
 import com.example.apptruyen.utils.VolleySingleton;
 
@@ -46,14 +47,14 @@ public class ContentChapterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_content_chapter, container, false);
 
-        sharedPreferences = getActivity().getSharedPreferences("THREE_CHAPTER", Context.MODE_PRIVATE);
+        sharedPreferences = getActivity().getSharedPreferences(SharedPreferencesKey.ID_THREE_CHAPTER.name(), Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         chapterCurrent = (Chapter) getArguments().getSerializable("current");
 
         mapping(view);
 
         getChapterContent(chapterCurrent.getIdStory(),chapterCurrent.getIdChapter());
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("LIST_CHAPTER",Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(SharedPreferencesKey.ID_CHAPTER_FIRST_LAST.name(),Context.MODE_PRIVATE);
         if(sharedPreferences.getInt("id_last_chapter",0)!=chapterCurrent.getIdChapter()||sharedPreferences.getInt("id_first_chapter",0)!=chapterCurrent.getIdChapter()){
             ImageButton btnNextChapter,btnPreviousChapter;
             btnNextChapter = (ImageButton) getActivity().findViewById(R.id.btnNextChapter);
