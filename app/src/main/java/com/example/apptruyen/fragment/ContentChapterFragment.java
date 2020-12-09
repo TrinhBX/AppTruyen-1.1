@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.example.apptruyen.R;
 import com.example.apptruyen.entities.Chapter;
+import com.example.apptruyen.entities.Story;
+import com.example.apptruyen.utils.DatabaseHandler;
 import com.example.apptruyen.utils.SharedPreferencesKey;
 import com.example.apptruyen.utils.URLManager;
 import com.example.apptruyen.utils.VolleySingleton;
@@ -51,6 +54,12 @@ public class ContentChapterFragment extends Fragment {
         editor = sharedPreferences.edit();
         chapterCurrent = (Chapter) getArguments().getSerializable("current");
 
+        DatabaseHandler databaseHandler = new DatabaseHandler(getContext());
+        if(databaseHandler.exitsStory(chapterCurrent.getIdStory())){
+            Story story = (Story)databaseHandler.getStory(chapterCurrent.getIdStory());
+            databaseHandler.updateStory(story,chapterCurrent.getIdChapter());
+        }
+
         mapping(view);
 
         getChapterContent(chapterCurrent.getIdStory(),chapterCurrent.getIdChapter());
@@ -61,24 +70,18 @@ public class ContentChapterFragment extends Fragment {
             btnPreviousChapter = (ImageButton) getActivity().findViewById(R.id.btnPreviousChapter);
             if(sharedPreferences.getInt("id_last_chapter",0)==chapterCurrent.getIdChapter()){
                 btnNextChapter.setImageResource(R.drawable.next_gray_24);
-                btnNextChapter.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                });
+                btnNextChapter.setEnabled(false);
+                btnPreviousChapter.setEnabled(true);
                 setOnPreviousChapter(btnPreviousChapter);
             }
             else if(sharedPreferences.getInt("id_first_chapter",0)==chapterCurrent.getIdChapter()){
+                btnNextChapter.setEnabled(true);
+                btnPreviousChapter.setEnabled(false);
                 btnPreviousChapter.setImageResource(R.drawable.back_gray24);
-                btnPreviousChapter.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                    }
-                });
                 setOnNextChapter(btnNextChapter);
             } else {
+                btnNextChapter.setEnabled(true);
+                btnPreviousChapter.setEnabled(true);
                 setOnNextChapter(btnNextChapter);
                 setOnPreviousChapter(btnPreviousChapter);
             }

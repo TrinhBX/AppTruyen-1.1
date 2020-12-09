@@ -75,6 +75,25 @@ public class StoryDetailActivity extends AppCompatActivity {
             btnReading.setText("Đọc tiếp");
         }
 
+        btnReading.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int idStory = story.getIdStory();
+                int idChapter;
+                if(databaseHandler.exitsStory(story.getIdStory())){
+                    Story newStory = (Story) databaseHandler.getStory(story.getIdStory());
+                    idChapter = newStory.getIdCurrentChapter();
+                } else {
+                    SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesKey.ID_CHAPTER_FIRST_LAST+"",MODE_PRIVATE);
+                    idChapter = sharedPreferences.getInt("id_first_chapter",0);
+                }
+                Intent sentIntent = new Intent(StoryDetailActivity.this,ChapterContentActivity.class);
+                Chapter chapter = new Chapter(idStory,idChapter);
+                sentIntent.putExtra("chapter",chapter);
+                startActivity(sentIntent);
+            }
+        });
+
         if(story!=null){
             collapsingToolbarLayout.setTitle(story.getStoryName()); //set name story
             txtStoryName.setText(story.getStoryName());
@@ -91,7 +110,6 @@ public class StoryDetailActivity extends AppCompatActivity {
         chapterListLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Bundle sendBundle = new Bundle();
                 sendBundle.putInt("idStory",story.getIdStory());
                 sendBundle.putString("nameStory",story.getStoryName());
@@ -108,18 +126,24 @@ public class StoryDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String s;
                 if(!databaseHandler.exitsStory(story.getIdStory())){
+                    SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesKey.ID_CHAPTER_FIRST_LAST+"",MODE_PRIVATE);
                     s= "Bookmarking";
                     btnBookmark.setImageResource(R.drawable.on_bookmark_24);
+                    story.setIdCurrentChapter(sharedPreferences.getInt("id_first_chapter",0));
                     databaseHandler.addStory(story);
                 } else {
                     s= "Un-Bookmarking";
                     btnBookmark.setImageResource(R.drawable.bookmark_24);
                     databaseHandler.deleteStory(story.getIdStory());
+                    btnReading.setText("Đọc ngay");
                 }
                 Toast.makeText(StoryDetailActivity.this,s,Toast.LENGTH_SHORT).show();
             }
         });
 
+        if(databaseHandler.exitsStory(story.getIdStory())){
+
+        }
         setListStoryOfAuthor();
 
         SharedPreferences sharedPreferences = getSharedPreferences(""+SharedPreferencesKey.STORY_NAME,MODE_PRIVATE);
@@ -143,17 +167,6 @@ public class StoryDetailActivity extends AppCompatActivity {
         btnBookmark = (ImageButton) findViewById(R.id.btn_bookmark);
         btnReading = (Button) findViewById(R.id.btn_reading);
     }
-    private void onClickButtonReading(final int idStory, final int idChapter){
-        btnReading.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent sentIntent = new Intent(StoryDetailActivity.this,ChapterContentActivity.class);
-                Chapter chapter = new Chapter(idStory,idChapter);
-                sentIntent.putExtra("chapter",chapter);
-                startActivity(sentIntent);
-            }
-        });
-    }
 
     private void getStoryDetail(final int idStory){
         StringRequest rq = new StringRequest(Request.Method.POST, URLManager.GET_STORY_DETAIL.getUrl(), new Response.Listener<String>() {
@@ -161,11 +174,7 @@ public class StoryDetailActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject object = new JSONObject(response);
-
                     txtLatestChapter.setText(object.getString("NameLastChapter"));
-                    if(!databaseHandler.exitsStory(story.getIdStory())){
-                        onClickButtonReading(story.getIdStory(),object.getInt("IDFirstChapter"));
-                    }
                     SharedPreferences sharedPreferences = getSharedPreferences(SharedPreferencesKey.ID_CHAPTER_FIRST_LAST+"",MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt("id_last_chapter",object.getInt("IDLastChapter"));
@@ -190,6 +199,8 @@ public class StoryDetailActivity extends AppCompatActivity {
         };
         VolleySingleton.getInstance(this).addToRequestQueue(rq);
     }
+
+
 
     private void setListStoryOfAuthor(){
         final List<Object> objectList = new ArrayList<>();
@@ -238,7 +249,6 @@ public class StoryDetailActivity extends AppCompatActivity {
         };
         VolleySingleton.getInstance(this).addToRequestQueue(rq);
     }
-
     @Override
     protected void onPause() {
         super.onPause();

@@ -22,7 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ChapterContentActivity"/>
+        <activity android:name=".activity.ChapterContentActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activity.StoryDetailActivity"
             android:screenOrientation="portrait" />

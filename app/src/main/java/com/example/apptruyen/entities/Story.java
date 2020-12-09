@@ -11,6 +11,10 @@ public class Story implements Serializable {
     private String avatar;
     private int numberOfChapter;
     private String review;
+    private int idCurrentChapter;
+
+    public Story() {
+    }
 
     public Story(int idStory, String storyName, String author, String status, String type, String avatar, int numberOfChapter, String review) {
         this.idStory = idStory;
@@ -23,23 +27,16 @@ public class Story implements Serializable {
         this.review = review;
     }
 
-    public Story(int idStory, String storyName, String author, String status, String type, String review) {
-        this.idStory = idStory;
-        this.storyName = storyName;
-        this.author = author;
-        this.status = status;
-        this.type = type;
-        this.review = review;
-    }
-
-    public Story(int idStory, String storyName, String author, String status, String type, String avatar, String review) {
+    public Story(int idStory, String storyName, String author, String status, String type, String avatar, int numberOfChapter, String review, int idCurrentChapter) {
         this.idStory = idStory;
         this.storyName = storyName;
         this.author = author;
         this.status = status;
         this.type = type;
         this.avatar = avatar;
+        this.numberOfChapter = numberOfChapter;
         this.review = review;
+        this.idCurrentChapter = idCurrentChapter;
     }
 
     public int getIdStory() {
@@ -104,6 +101,13 @@ public class Story implements Serializable {
     public void setNumberOfChapter(int numberOfChapter) {
         this.numberOfChapter = numberOfChapter;
     }
+    public int getIdCurrentChapter() {
+        return idCurrentChapter;
+    }
+
+    public void setIdCurrentChapter(int idCurrentChapter) {
+        this.idCurrentChapter = idCurrentChapter;
+    }
 
     @Override
     public String toString() {
@@ -116,6 +120,7 @@ public class Story implements Serializable {
                 ", avatar='" + avatar + '\'' +
                 ", numberOfChapter=" + numberOfChapter +
                 ", review='" + review + '\'' +
+                ", idChapter='" + idCurrentChapter + '\'' +
                 '}';
     }
 }

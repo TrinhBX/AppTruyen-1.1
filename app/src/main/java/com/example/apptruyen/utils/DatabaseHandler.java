@@ -66,7 +66,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(NUMBER_OF_CHAPTER, story.getNumberOfChapter());
         values.put(AVATAR, story.getAvatar());
         values.put(REVIEW, story.getReview());
-
+        values.put(CHAPTER_READING, story.getIdCurrentChapter());
         sqLiteDatabase.insert(TABLE_NAME, null, values);
         sqLiteDatabase.close();
     }
@@ -87,6 +87,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
         }
         Story story = cursorToStory(cursor);
+
         cursor.close();
         return story;
     }
@@ -103,7 +104,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         while(cursor.isAfterLast() == false) {
             Story story = new Story(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),cursor.getString(4),cursor.getString(5),
-                    cursor.getInt(6),cursor.getString(7));
+                    cursor.getInt(6),cursor.getString(7),cursor.getInt(8));
             stories.add(story);
             cursor.moveToNext();
         }
@@ -124,7 +125,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(NUMBER_OF_CHAPTER, story.getNumberOfChapter());
         values.put(AVATAR, story.getAvatar());
         values.put(REVIEW, story.getReview());
+        db.update(TABLE_NAME, values, ID_STORY + " = ?", new String[] { String.valueOf(story.getIdStory())});
+        db.close();
+    }
+    public void updateStory(Story story,int idChapterReading) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(ID_STORY, story.getIdStory());
+        values.put(STORY_NAME, story.getStoryName());
+        values.put(AUTHOR, story.getAuthor());
+        values.put(STATUS, story.getStatus());
+        values.put(TYPES, story.getType());
+        values.put(NUMBER_OF_CHAPTER, story.getNumberOfChapter());
+        values.put(AVATAR, story.getAvatar());
+        values.put(REVIEW, story.getReview());
+        values.put(CHAPTER_READING, idChapterReading);
         db.update(TABLE_NAME, values, ID_STORY + " = ?", new String[] { String.valueOf(story.getIdStory())});
         db.close();
     }
@@ -158,7 +174,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @NotNull
     private Story cursorToStory(Cursor cursor){
         Story story = new Story(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),cursor.getString(4),cursor.getString(5),
-                cursor.getInt(6),cursor.getString(7));
+                cursor.getInt(6),cursor.getString(7),cursor.getInt(8));
         return story;
     }
 
