@@ -142,13 +142,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         TextView txtName = (TextView) holder.txtName;
         txtName.setText(story.getStoryName());
         TextView txtAuthor = (TextView) holder.txtAuthor;
-        txtAuthor.setText(story.getAuthor());
+        txtAuthor.setText("Tác giả: "+story.getAuthor());
         TextView txtStatus = (TextView) holder.txtStatus;
-        txtStatus.setText(story.getStatus());
+        txtStatus.setText("Tình trạng: "+story.getStatus());
         TextView txtType = (TextView) holder.txtType;
-        txtType.setText(story.getType());
+        txtType.setText("Thể loại: "+story.getType());
         TextView txtTotalChapter = (TextView) holder.txtTotalChapter;
-        txtTotalChapter.setText(""+story.getNumberOfChapter());
+        txtTotalChapter.setText("Số chương: "+story.getNumberOfChapter());
         ImageView avatar = (ImageView)holder.avatar;
         VolleySingleton.getInstance(context).setImage(story.getAvatar(),avatar);
     }
